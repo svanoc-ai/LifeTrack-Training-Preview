@@ -1,27 +1,11 @@
-import {useMemo, useState} from 'react';
-import proposals from './catalogue20-propositions.json';
-
-type Proposal = {candidateId:string;name:string;equipment:string;movementFamily:string;primaryGroups:string;secondaryGroups:string;precaution:string;integrationDecision:string;biomechanicalStatus:string;catalogStatus:string;proposedExerciseId:string};
-const items = proposals as Proposal[];
-const splitGroups = (value:string) => value.split(',').map(v=>v.trim()).filter(Boolean);
-export default function Catalogue20Preview() {
-  const [open,setOpen] = useState(false);
-  const [search,setSearch] = useState('');
-  const [group,setGroup] = useState('');
-  const [decision,setDecision] = useState('');
-  const groups = useMemo(()=>Array.from(new Set(items.flatMap(p=>[...splitGroups(p.primaryGroups),...splitGroups(p.secondaryGroups)]))).sort((a,b)=>a.localeCompare(b,'fr')),[]);
-  const results = useMemo(()=>items.filter(p=>{
-    const term = search.trim().toLocaleLowerCase('fr');
-    return (!term || [p.name,p.equipment,p.movementFamily,p.primaryGroups,p.secondaryGroups].some(v=>v.toLocaleLowerCase('fr').includes(term)))
-      && (!group || [...splitGroups(p.primaryGroups),...splitGroups(p.secondaryGroups)].includes(group))
-      && (!decision || p.integrationDecision===decision);
-  }),[search,group,decision]);
-  return <div className="panel lt20-preview" aria-label="Catalogue 20 groupes en préparation">
-    <div className="lt20-preview-heading"><div><p className="kicker">LOT 12 · APERÇU SANS IMPORT</p><h2>Catalogue 20 groupes — propositions</h2><p className="muted small">{items.length} fiches en revue · Aucun exercice ajouté à ta bibliothèque · Aucun historique modifié</p></div><button type="button" className="secondary-button" onClick={()=>setOpen(v=>!v)} aria-expanded={open}>{open?'Masquer':'Consulter'}</button></div>
-    {open&&<><p className="muted small">Fiches non validées biomécaniquement. Cette consultation ne permet ni l'ajout, ni la modification, ni la suppression d'exercices.</p>
-      <div className="lt20-filters"><label>Recherche<input className="profile-input" type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Nom, matériel, muscle…"/></label><label>Groupe musculaire<select className="profile-input" value={group} onChange={e=>setGroup(e.target.value)}><option value="">Tous les groupes</option>{groups.map(g=><option key={g} value={g}>{g}</option>)}</select></label><label>Décision proposée<select className="profile-input" value={decision} onChange={e=>setDecision(e.target.value)}><option value="">Toutes</option>{Array.from(new Set(items.map(p=>p.integrationDecision))).sort().map(d=><option key={d} value={d}>{d==='NEW_EXERCISE_CANDIDATE'?'Nouvel exercice candidat':d==='MATCH_EXISTING_VARIANT'?'Correspondance existante':d==='REVIEW_VARIANT'?'Variante à examiner':d}</option>)}</select></label></div>
-      <p className="muted small" role="status">{results.length} proposition(s) affichée(s)</p>
-      <div className="lt20-results">{results.map(p=><article className="lt20-result" key={p.candidateId}><strong>{p.name}</strong><p className="muted small">Principal : {p.primaryGroups||'À déterminer'} · Secondaire : {p.secondaryGroups||'Non renseigné'}</p><p className="muted small">Matériel : {p.equipment||'À déterminer'} · {p.movementFamily||'Famille non renseignée'}</p>{p.precaution&&<p className="muted small">Précaution : {p.precaution}</p>}<small>Proposition non validée · {p.integrationDecision}</small></article>)}{results.length===0&&<p className="muted">Aucune proposition ne correspond aux filtres.</p>}</div>
-    </>}
-  </div>;
+import {useMemo,useState} from 'react';
+import catalogue from './catalogue20-v11.json';
+type Item = {numero:number;exercice:string;id_cible:string;decision_v10:string;principaux_20g:string[];secondaires_20g:string[];materiel:string;controle_prioritaire:string;fiche_parent:string;validation:string};
+const items = catalogue as Item[];
+const labels:Record<string,string> = {NOUVELLE_FICHE_CANDIDATE:'Nouvelle fiche candidate',ENRICHIR_EXISTANT:'Enrichir une fiche existante',VARIANTE_A_ARBITRER:'Variante à arbitrer',FUSIONNER_SANS_FICHE:'Regroupement proposé',SUSPENDRE:'Suspendue'};
+export default function Catalogue20Preview(){
+ const [open,setOpen]=useState(false),[search,setSearch]=useState(''),[group,setGroup]=useState(''),[decision,setDecision]=useState('');
+ const groups=useMemo(()=>Array.from(new Set(items.flatMap(x=>[...x.principaux_20g,...x.secondaires_20g]))).sort((a,b)=>a.localeCompare(b,'fr')),[]);
+ const results=useMemo(()=>items.filter(x=>(!search||[x.exercice,x.materiel,x.id_cible].some(s=>s.toLowerCase().includes(search.trim().toLowerCase())))&&(!group||[...x.principaux_20g,...x.secondaires_20g].includes(group))&&(!decision||x.decision_v10===decision)),[search,group,decision]);
+ return <div className="panel lt20-preview" aria-label="Catalogue 20 groupes V11 en revue"><div className="lt20-preview-heading"><div><p className="kicker">V11 · REVUE CONSOLIDÉE SANS IMPORT</p><h2>Catalogue 20 groupes</h2><p className="muted small">{items.length} propositions · 20 groupes normalisés · Bibliothèque et historique inchangés</p></div><button type="button" className="secondary-button" onClick={()=>setOpen(v=>!v)} aria-expanded={open}>{open?'Masquer':'Consulter'}</button></div>{open&&<><p className="muted small">Arbitrages V10 provisoires : aucune fiche n'est encore autorisée à l'import. Les exercices suspendus restent visibles uniquement pour contrôle.</p><div className="lt20-filters"><label>Recherche<input className="profile-input" type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Exercice, matériel, identifiant…"/></label><label>Groupe musculaire<select className="profile-input" value={group} onChange={e=>setGroup(e.target.value)}><option value="">Tous les groupes</option>{groups.map(g=><option key={g} value={g}>{g}</option>)}</select></label><label>Orientation V10<select className="profile-input" value={decision} onChange={e=>setDecision(e.target.value)}><option value="">Toutes</option>{Object.entries(labels).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label></div><p className="muted small" role="status">{results.length} proposition(s) affichée(s)</p><div className="lt20-results">{results.map(x=><article className="lt20-result" key={x.numero}><strong>{x.exercice}</strong><p className="muted small">{labels[x.decision_v10]||x.decision_v10} · {x.id_cible}</p><p className="muted small">Principaux : {x.principaux_20g.join(', ')||'À définir'} · Secondaires : {x.secondaires_20g.join(', ')||'Non renseignés'}</p><p className="muted small">Matériel : {x.materiel||'À vérifier'}</p>{x.fiche_parent&&<p className="muted small">Fiche parente : {x.fiche_parent}</p>}<p className="muted small">Contrôle : {x.controle_prioritaire}</p><small>Validation en attente · Import désactivé</small></article>)}{results.length===0&&<p className="muted">Aucun résultat.</p>}</div></>}</div>;
 }
