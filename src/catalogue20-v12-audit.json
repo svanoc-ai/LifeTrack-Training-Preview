@@ -1,0 +1,464 @@
+[
+  {
+    "numero": 1,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 2,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 3,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 4,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 5,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 6,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 7,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle renforcé",
+    "note": "Confirmer un ancrage haut stable avant toute utilisation.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 8,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 9,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 10,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 11,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 12,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 13,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 14,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle renforcé",
+    "note": "Intitulé et mouvement à redéfinir : extension rachidienne ou charnière de hanche.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 15,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 16,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 17,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 18,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 19,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 20,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 21,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 22,
+    "lot": "1 · Haut du corps",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 23,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 24,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 25,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 26,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 27,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 28,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 29,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 30,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 31,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 32,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 33,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle renforcé",
+    "note": "Résistance verticale et sécurité non démontrées avec élastiques : suspension maintenue.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 34,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 35,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 36,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 37,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 38,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle renforcé",
+    "note": "Préserver l’identifiant de la fiche personnalisée existante ; revoir mesure en durée.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 39,
+    "lot": "2 · Bras et tronc",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 40,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle renforcé",
+    "note": "Différencier le hip thrust du pont fessier au sol sans banc.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 41,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle renforcé",
+    "note": "Conserver le standard et préciser la différence avec hip thrust.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 42,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 43,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 44,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 45,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 46,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 47,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 48,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 49,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle renforcé",
+    "note": "Ballon non confirmé dans le matériel disponible.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 50,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle renforcé",
+    "note": "Examiner la fusion avec Assis-debout ; tenir compte de la tolérance du genou.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 51,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 52,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle renforcé",
+    "note": "Examiner la fusion avec Squat vers chaise.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 53,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 54,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 55,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 56,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 57,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 58,
+    "lot": "3 · Hanches et cuisses",
+    "priorite": "Contrôle renforcé",
+    "note": "Vérifier la fixation, le confort et la trajectoire du leg curl allongé.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 59,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 60,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 61,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 62,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 63,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 64,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 65,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  },
+  {
+    "numero": 66,
+    "lot": "4 · Bas de jambe",
+    "priorite": "Contrôle standard",
+    "note": "Confirmer l’exécution, les muscles et le montage avant validation ; aucun import automatique.",
+    "statut": "A_VALIDER"
+  }
+]
