@@ -1,0 +1,11 @@
+LifeTrack Training Preview V11 — livraison differentielle
+
+Comparer avec la base LifeTrack-Training-Preview-main.zip disponible lors de la preparation.
+Fichiers a ajouter/remplacer dans le depot Preview, en conservant les chemins :
+- LIVRAISON-20G-V11.md
+- src/Catalogue20Preview.tsx
+- src/catalogue20-v11.json
+
+Ne pas deployer dans LifeTack---Test (production).
+Aucun autre fichier a supprimer.
+Attention : compilation non verifiee ; tester le deploiement GitHub Pages et la navigation sur iPhone.
