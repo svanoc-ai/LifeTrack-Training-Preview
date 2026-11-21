@@ -59,6 +59,12 @@ const STANDARD_EXERCISES: Exercise[] = [
   ['mollets-debout-bilateral','Mollets debout bilatéral','musculation',['Mollets'],['Poids du corps']],
   ['releve-de-pointes-contre-mur','Relevé de pointes contre mur','musculation',['Tibial antérieur'],['Poids du corps']],
   ['marche-sur-les-talons','Marche sur les talons','musculation',['Tibial antérieur'],['Poids du corps']],
+  // V14 — seconde vague de 5 exercices à faible exigence matérielle.
+  ['pompes-prise-serree','Pompes prise serrée','musculation',["Pectoraux", "Triceps", "Épaules"],['Poids du corps']],
+  ['crunch-controle','Crunch contrôlé','musculation',["Abdominaux"],['Poids du corps']],
+  ['adduction-couchee-sur-le-cote','Adduction couchée sur le côté','musculation',["Adducteurs"],['Poids du corps']],
+  ['mollets-debout-unilateral','Mollets debout unilatéral','musculation',["Mollets"],['Poids du corps']],
+  ['mollets-isometriques-sur-pointes','Mollets isométriques sur pointes','musculation',["Mollets"],['Poids du corps']],
   ['marche-tapis','Marche sur tapis','cardio',['Cardio'],['Tapis Sole F63']],
   ['course-tapis','Course sur tapis','cardio',['Cardio'],['Tapis Sole F63']],
   ['velo-appartement','Vélo d’appartement','cardio',['Cardio'],['Vélo Merach S36L']],
