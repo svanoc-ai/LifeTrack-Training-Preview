@@ -1,0 +1,530 @@
+[
+  {
+    "numero": 1,
+    "exercice": "Pompes inclinées",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:pompes-inclinees",
+    "note_v13": "Support stable, non glissant et à hauteur adaptée ; alignement tronc-bassin."
+  },
+  {
+    "numero": 2,
+    "exercice": "Pompes classiques",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:pompes-classiques",
+    "note_v13": "Amplitude contrôlée ; possibilité de revenir à la variante inclinée."
+  },
+  {
+    "numero": 3,
+    "exercice": "Pompes prise serrée",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:pompes-prise-serree",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 4,
+    "exercice": "Développé pectoral élastiques",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:developpe-pectoral-elastiques",
+    "note_v13": "Préciser point d’ancrage, orientation de poussée et stabilité"
+  },
+  {
+    "numero": 5,
+    "exercice": "Écartés pectoraux élastiques",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:ecartes-pectoraux",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 6,
+    "exercice": "Pull-over élastique",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:pull-over",
+    "note_v13": "Préciser ancrage, trajectoire et amplitude"
+  },
+  {
+    "numero": 7,
+    "exercice": "Tirage vertical élastique",
+    "decision_v10": "SUSPENDRE",
+    "statut_v13": "SUSPENDU",
+    "id_cible": "lt7:tirage-vertical-elastique",
+    "note_v13": "Ancrage haut fiable non confirmé"
+  },
+  {
+    "numero": 8,
+    "exercice": "Tirage bras tendus",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:tirage-bras-tendus",
+    "note_v13": "Confirmer ancrage haut et trajectoire"
+  },
+  {
+    "numero": 9,
+    "exercice": "Rowing unilatéral",
+    "decision_v10": "VARIANTE_A_ARBITRER",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:rowing-unilateral",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 10,
+    "exercice": "Rowing prise large",
+    "decision_v10": "VARIANTE_A_ARBITRER",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:rowing-prise-large",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 11,
+    "exercice": "Face pull",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:face-pull",
+    "note_v13": "Confirmer ancrage à hauteur du visage"
+  },
+  {
+    "numero": 12,
+    "exercice": "Shrugs élastiques",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:shrugs-elastiques",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 13,
+    "exercice": "Rétraction scapulaire élastiques",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:retraction-scapulaire-elastiques",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 14,
+    "exercice": "Extensions lombaires debout",
+    "decision_v10": "SUSPENDRE",
+    "statut_v13": "SUSPENDU",
+    "id_cible": "lt7:extensions-lombaires-debout",
+    "note_v13": "Mouvement lombaire insuffisamment défini"
+  },
+  {
+    "numero": 15,
+    "exercice": "Bird-dog",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:bird-dog",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 16,
+    "exercice": "Good morning élastique",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:good-morning-elastique",
+    "note_v13": "Contrôler charnière de hanche, charge et amplitude"
+  },
+  {
+    "numero": 17,
+    "exercice": "Développé militaire debout",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:developpe-debout",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 18,
+    "exercice": "Élévation frontale",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:elevation-frontale",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 19,
+    "exercice": "Élévation latérale",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:elevations-laterales",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 20,
+    "exercice": "Élévation latérale unilatérale",
+    "decision_v10": "VARIANTE_A_ARBITRER",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:elevation-laterale-unilaterale",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 21,
+    "exercice": "Oiseau buste penché",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:oiseau-buste-penche",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 22,
+    "exercice": "Reverse fly élastiques",
+    "decision_v10": "VARIANTE_A_ARBITRER",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:reverse-fly-elastiques",
+    "note_v13": "Distinguer trajectoire et posture de l’oiseau"
+  },
+  {
+    "numero": 23,
+    "exercice": "Curl biceps supination",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:curl-biceps",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 24,
+    "exercice": "Curl marteau",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:curl-marteau",
+    "note_v13": "Prise neutre, coudes stables ; résistance modérée et sans à-coups."
+  },
+  {
+    "numero": 25,
+    "exercice": "Curl concentration debout",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:curl-concentration-debout",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 26,
+    "exercice": "Curl inversé",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:curl-inverse",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 27,
+    "exercice": "Extension triceps au-dessus de la tête",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:extension-triceps-au-dessus-de-la-tete",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 28,
+    "exercice": "Pushdown triceps élastiques",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:pushdown-triceps-elastiques",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 29,
+    "exercice": "Kickback triceps",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:kickback-triceps",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 30,
+    "exercice": "Flexion des poignets",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:flexion-des-poignets",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 31,
+    "exercice": "Extension des poignets",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:extension-des-poignets",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 32,
+    "exercice": "Pronation supination avant-bras",
+    "decision_v10": "SUSPENDRE",
+    "statut_v13": "SUSPENDU",
+    "id_cible": "lt7:pronation-supination-avant-bras",
+    "note_v13": "Résistance et outil non spécifiés"
+  },
+  {
+    "numero": 33,
+    "exercice": "Farmer hold élastiques",
+    "decision_v10": "SUSPENDRE",
+    "statut_v13": "SUSPENDU",
+    "id_cible": "lt7:farmer-hold-elastiques",
+    "note_v13": "Charge verticale élastique non fiabilisée"
+  },
+  {
+    "numero": 34,
+    "exercice": "Planche ventrale",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:gainage",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 35,
+    "exercice": "Dead bug",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:dead-bug",
+    "note_v13": "Lombaires en position neutre ; mouvement lent et alterné."
+  },
+  {
+    "numero": 36,
+    "exercice": "Crunch contrôlé",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:crunch-controle",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 37,
+    "exercice": "Pallof press",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:pallof-press",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 38,
+    "exercice": "Gainage latéral",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "custom:d5e756ff-1a57-48fe-abaf-7f072bf39bd1",
+    "note_v13": "Corriger la mesure : durée plutôt que répétitions (après vérification du schéma)"
+  },
+  {
+    "numero": 39,
+    "exercice": "Rotation de buste élastique",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:rotation-de-buste-elastique",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 40,
+    "exercice": "Hip thrust",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:hip-thrust",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 41,
+    "exercice": "Pont fessier",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:pont-fessier",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 42,
+    "exercice": "Pont fessier unilatéral",
+    "decision_v10": "VARIANTE_A_ARBITRER",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:pont-fessier-unilateral",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 43,
+    "exercice": "Extension de hanche debout",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:extension-de-hanche-debout",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 44,
+    "exercice": "Abduction de hanche debout",
+    "decision_v10": "ENRICHIR_EXISTANT",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "std:abduction-hanche",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 45,
+    "exercice": "Abduction couchée sur le côté",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:abduction-couchee-sur-le-cote",
+    "note_v13": "Bassin stable, sans rotation ; amplitude modérée."
+  },
+  {
+    "numero": 46,
+    "exercice": "Marche latérale élastique",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:marche-laterale-elastique",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 47,
+    "exercice": "Adduction de hanche debout",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:adduction-de-hanche-debout",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 48,
+    "exercice": "Adduction couchée sur le côté",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:adduction-couchee-sur-le-cote",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 49,
+    "exercice": "Serrage ballon entre genoux",
+    "decision_v10": "SUSPENDRE",
+    "statut_v13": "SUSPENDU",
+    "id_cible": "lt7:serrage-ballon-entre-genoux",
+    "note_v13": "Ballon non confirmé dans le matériel"
+  },
+  {
+    "numero": 50,
+    "exercice": "Squat vers chaise",
+    "decision_v10": "VARIANTE_A_ARBITRER",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:squat-vers-chaise",
+    "note_v13": "Choisir libellé unique et consigne d’amplitude sans douleur"
+  },
+  {
+    "numero": 51,
+    "exercice": "Squat élastique",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:squat-elastique",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 52,
+    "exercice": "Assis-debout",
+    "decision_v10": "FUSIONNER_SANS_FICHE",
+    "statut_v13": "EXCLU_DOUBLON",
+    "id_cible": "lt7:assis-debout",
+    "note_v13": "Fusion proposée avec squat vers chaise"
+  },
+  {
+    "numero": 53,
+    "exercice": "Extension terminale du genou",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:extension-terminale-du-genou",
+    "note_v13": "Vérifier fixation élastique et tolérance rotulienne"
+  },
+  {
+    "numero": 54,
+    "exercice": "Wall sit",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:wall-sit",
+    "note_v13": "Contrôler angle de flexion et tolérance rotulienne"
+  },
+  {
+    "numero": 55,
+    "exercice": "Soulevé de terre roumain",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:souleve-de-terre-roumain",
+    "note_v13": "Distinguer du SDT standard par consigne de charnière de hanche"
+  },
+  {
+    "numero": 56,
+    "exercice": "Soulevé de terre jambes semi-tendues",
+    "decision_v10": "VARIANTE_A_ARBITRER",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:souleve-de-terre-jambes-semi-tendues",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 57,
+    "exercice": "Leg curl debout élastique",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:leg-curl-debout-elastique",
+    "note_v13": "Contrôler ancrage et stabilité"
+  },
+  {
+    "numero": 58,
+    "exercice": "Leg curl allongé élastique",
+    "decision_v10": "SUSPENDRE",
+    "statut_v13": "SUSPENDU",
+    "id_cible": "lt7:leg-curl-allonge-elastique",
+    "note_v13": "Ancrage et montage en décubitus non confirmés"
+  },
+  {
+    "numero": 59,
+    "exercice": "Mollets debout bilatéral",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:mollets-debout-bilateral",
+    "note_v13": "Appui stable, montée et descente contrôlées."
+  },
+  {
+    "numero": 60,
+    "exercice": "Mollets debout unilatéral",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:mollets-debout-unilateral",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 61,
+    "exercice": "Mollets assis avec résistance",
+    "decision_v10": "SUSPENDRE",
+    "statut_v13": "SUSPENDU",
+    "id_cible": "lt7:mollets-assis-avec-resistance",
+    "note_v13": "Montage de résistance assis non défini"
+  },
+  {
+    "numero": 62,
+    "exercice": "Mollets isométriques sur pointes",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:mollets-isometriques-sur-pointes",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  },
+  {
+    "numero": 63,
+    "exercice": "Relevé de pointes contre mur",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:releve-de-pointes-contre-mur",
+    "note_v13": "Dos contre un mur, mouvement de cheville sans impulsion."
+  },
+  {
+    "numero": 64,
+    "exercice": "Dorsiflexion élastique assise",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:dorsiflexion-elastique-assise",
+    "note_v13": "Contrôler fixation élastique"
+  },
+  {
+    "numero": 65,
+    "exercice": "Marche sur les talons",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "ACTIF_PREVIEW",
+    "id_cible": "lt7:marche-sur-les-talons",
+    "note_v13": "Marche lente sur sol dégagé ; interrompre en cas de perte d’équilibre."
+  },
+  {
+    "numero": 66,
+    "exercice": "Dorsiflexion isométrique",
+    "decision_v10": "NOUVELLE_FICHE_CANDIDATE",
+    "statut_v13": "REVUE_REQUISE",
+    "id_cible": "lt7:dorsiflexion-isometrique",
+    "note_v13": "Vérifier consignes, sécurité, matériel et muscles avant publication"
+  }
+]
