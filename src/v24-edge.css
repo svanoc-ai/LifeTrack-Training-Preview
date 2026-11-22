@@ -39,3 +39,20 @@
  .lt-edge-exercises .lt-premium-card{padding-inline:9px!important}
  .lt-edge-exercises .template-actions{padding-inline:9px!important}
 }
+
+/* V24.2 — densité verticale optimisée, typographie inchangée. */
+.template-editor .lt-premium-section{padding-top:12px;padding-bottom:13px}
+.template-editor .lt-premium-section h3{margin-bottom:10px}
+.template-editor .lt-premium-organisation-row+.lt-premium-organisation-row{margin-top:8px}
+.template-editor .lt-premium-metrics>.target-field,.template-editor .lt-premium-performance-extra>.target-field{padding:9px 8px;gap:4px;justify-content:start}
+.template-editor .lt-premium-metrics>.target-field>input,.template-editor .lt-premium-performance-extra>.target-field input{min-height:38px}
+.template-editor .lt-premium-performance-extra{margin-top:7px}
+.template-editor .lt-premium-extra{padding-top:12px}
+.template-editor .lt-premium-extra-content{padding-top:8px}
+.template-editor .lt-premium-organisation-row select{min-height:34px}
+
+/* 2-G.0.5 — synthèse de revue du catalogue, lisible sur iPhone. */
+.lt20-review-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0 16px}
+.lt20-review-summary>div{min-width:0;border:1px solid var(--line);border-radius:12px;padding:10px 4px;text-align:center;display:flex;flex-direction:column;gap:4px}
+.lt20-review-summary strong{font-size:clamp(19px,5vw,25px);color:var(--accent)}
+.lt20-review-summary span{font-size:11px;line-height:1.2;color:var(--muted)}
