@@ -52,7 +52,7 @@ export function resumeClock<T extends ClockState>(state:T, now=Date.now()):T {
  return {...saved,status:'active',restUntil:remaining?iso(now+remaining):null,
   restStartedAt:remaining?iso(now):null,restRemainingMs:0};
 }
-export function adjustRestClock<T extends ClockState>(state:T, seconds:number, now=Date.now(),kind:'series'|'exercise'|'round'='series'):T {
+export function adjustRestClock<T extends ClockState>(state:T, seconds:number, now=Date.now()):T {
  const saved=advanceClock(state,now);
  if(!saved.restUntil)return saved;
  const next=Math.max(now,at(saved.restUntil)+seconds*1000);
