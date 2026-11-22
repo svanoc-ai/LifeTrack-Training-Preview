@@ -1,0 +1,22 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),ts=require('typescript');
+const src=fs.readFileSync(path.join(__dirname,'../src/statsEngine.ts'),'utf8');
+const e={};vm.runInNewContext(ts.transpileModule(src,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports:e,Date,Map,Set,Number,Math,Error});
+const period={start:'2026-11-22',end:'2026-11-22'};
+const make=(id)=>({id,status:'completed',startedAt:'2026-11-22T09:00:00',updatedAt:'2026-11-22T09:03:00',endedAt:'2026-11-22T09:03:00',plannedId:null,activeMs:90_000,pauseMs:30_000,targets:[{exerciseId:'std:curl-biceps',sets:1}],exerciseKinds:{0:'musculation'},exerciseResults:[{index:0,sets:[{set:1,reps:12,loadKg:40,validated:true}]}],cardioResults:[]});
+const legacy=make('old'),v23={...make('new'),restMs:60_000};
+const summary=e.calculateStats([legacy,v23],[],period,new Date('2026-11-22T12:00:00'));
+assert.equal(summary.sessions,2);
+assert.equal(summary.sessionsWithMeasuredRest,1);
+assert.equal(summary.restMs,60_000);
+assert.equal(summary.recordedPauseMs,60_000);
+assert.equal(summary.elapsedMs,90_000+30_000+90_000+60_000); // Legacy convention retained, V23 excludes interruptions.
+const execution=fs.readFileSync(path.join(__dirname,'../src/SessionExecution.tsx'),'utf8');
+assert.match(execution,/beginRestClock\(session,duration,now,kind\)/,'clock started at each rest transition');
+assert.match(execution,/stopRestClock\(session\)/,'actual rests stopped rather than estimated');
+assert.match(execution,/restMs:0,restStartedAt:null/,'new sessions have explicit recoveries');
+assert.match(execution,/targets\.some\(t=>STANDARD_VARIANTS\.filter\(v=>v\.exerciseId===t\.exerciseId\)\.length>1\)/,'single variant pre-session selector hidden');
+const editor=fs.readFileSync(path.join(__dirname,'../src/WorkoutEditor.tsx'),'utf8');
+assert.match(editor,/missingRepetitions\(t\)/,'empty target validates at save');
+assert.match(editor,/DurationTargetInput/,'duration editing stays in the selected mode');
+console.log('PASS V23: session clock, stats, editor, and variant integration');
