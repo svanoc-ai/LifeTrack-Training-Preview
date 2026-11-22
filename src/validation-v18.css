@@ -1,0 +1,11 @@
+/* V18 consolidated — explicit field errors and variant selector */
+.template-editor .target-card .lt-v18-invalid-input,
+.template-editor .target-card input[aria-invalid="true"] {
+ border: 2px solid #ff6674 !important;
+ outline: 2px solid #ff6674 !important;
+ outline-offset: -2px;
+ box-shadow: 0 0 0 2px rgba(255,102,116,.18) !important;
+}
+.template-editor .lt-v18-variant-choice {display:block;margin:.75rem 0;}
+.template-editor .lt-v18-variant-choice select {display:block;width:100%;margin-top:.4rem;}
+.template-editor .lt-v18-variant-choice small {display:block;margin-top:.3rem;line-height:1.35;}

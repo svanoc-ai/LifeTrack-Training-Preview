@@ -65,6 +65,10 @@ const STANDARD_EXERCISES: Exercise[] = [
   ['adduction-couchee-sur-le-cote','Adduction couchée sur le côté','musculation',["Adducteurs"],['Poids du corps']],
   ['mollets-debout-unilateral','Mollets debout unilatéral','musculation',["Mollets"],['Poids du corps']],
   ['mollets-isometriques-sur-pointes','Mollets isométriques sur pointes','musculation',["Mollets"],['Poids du corps']],
+  // V18 — troisième vague Preview : trois exercices à faible exigence matérielle.
+  ['flexion-poignets','Flexion des poignets','musculation',['Avant-bras'],['SmartWorkout']],
+  ['extension-poignets','Extension des poignets','musculation',['Avant-bras'],['SmartWorkout']],
+  ['dorsiflexion-isometrique','Dorsiflexion isométrique','musculation',['Tibial antérieur'],['Poids du corps']],
   ['marche-tapis','Marche sur tapis','cardio',['Cardio'],['Tapis Sole F63']],
   ['course-tapis','Course sur tapis','cardio',['Cardio'],['Tapis Sole F63']],
   ['velo-appartement','Vélo d’appartement','cardio',['Cardio'],['Vélo Merach S36L']],
