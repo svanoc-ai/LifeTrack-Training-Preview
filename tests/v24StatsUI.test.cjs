@@ -1,6 +1,6 @@
 const fs=require('node:fs');const assert=require('node:assert/strict');
 const stats=fs.readFileSync('src/StatsDashboard.tsx','utf8');
-assert.match(stats,/summary20FromSnapshots\(executions,period.start,period.end\)/);
+assert.match(stats,/summary20FromSnapshots\(scopedExecutions,period.start,period.end\)/);
 assert.match(stats,/GROUPS_20\.map\(group/);
 assert.match(stats,/anciennes données ne sont pas recalculées/);
 assert.match(stats,/view==='anatomie'&&<AnatomyPrototype/);

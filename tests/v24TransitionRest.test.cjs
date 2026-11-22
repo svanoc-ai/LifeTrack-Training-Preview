@@ -9,8 +9,8 @@ assert.equal(step([{sets:1,betweenExerciseRestSeconds:0},{sets:1}],0,1).restSeco
 assert.equal(step([{sets:2,betweenExerciseRestSeconds:40,restSeconds:65},{sets:1}],0,1).restSeconds,65,'between series rest unchanged');
 assert.equal(step([{sets:1,betweenExerciseRestSeconds:4000},{sets:1}],0,1).restSeconds,3600,'safe upper bound');
 const editor=fs.readFileSync(path.join(__dirname,'../src/WorkoutEditor.tsx'),'utf8');
-assert.match(editor,/Avant exercice suivant/);
-assert.match(editor,/variantCount>1&&<>/);
+assert.match(editor,/input\('Avant exercice suivant',t\.betweenExerciseRestSeconds/);
+assert.match(editor,/variantCount>1&&/);
 const execution=fs.readFileSync(path.join(__dirname,'../src/SessionExecution.tsx'),'utf8');
 assert.match(execution,/<MeasuredDurationEditor label="Temps actif"/);
 assert.match(execution,/<MeasuredDurationEditor label="Récupération effective"/);
