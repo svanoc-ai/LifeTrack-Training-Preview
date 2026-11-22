@@ -5,7 +5,7 @@ export type RefProgram={id:string;name:string;templateIds:string[]};
 export type RefPlan={id:string;templateId:string;programId?:string|null};
 export type RefExecution={id:string;templateId?:string;plannedId?:string|null;targets:{exerciseId:string;variantId?:string;muscleSnapshot?:{exerciseId:string;variantId:string;mapping?:unknown}|null}[];status:string};
 export type IntegrityIssue={area:'Bibliothèque'|'Programmes'|'Calendrier'|'Historique'|'Anatomie';recordId:string;detail:string};
-export function auditLibraryLinks(input:{exercises:RefExercise[];variants:{id:string;exerciseId:string}[];templates:RefTemplate[];programs:RefProgram[];plans:RefPlan[];executions:RefExecution[]}):{issues:IntegrityIssue[];stats:{exercises:number;templates:number;programs:number;plans:number;executions:number;snapshots:number;unclassified:number}}{
+export function auditLibraryLinks(input:{exercises:RefExercise[];variants:readonly {id:string;exerciseId:string}[];templates:RefTemplate[];programs:RefProgram[];plans:RefPlan[];executions:RefExecution[]}):{issues:IntegrityIssue[];stats:{exercises:number;templates:number;programs:number;plans:number;executions:number;snapshots:number;unclassified:number}}{
  const {exercises,variants,templates,programs,plans,executions}=input;
  const ids=new Set(exercises.map(x=>x.id)),variantMap=new Map(variants.map(v=>[v.id,v.exerciseId]));
  const templateIds=new Set(templates.map(x=>x.id)),programIds=new Set(programs.map(x=>x.id)),planIds=new Set(plans.map(x=>x.id));
