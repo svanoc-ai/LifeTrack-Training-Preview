@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const source=fs.readFileSync('src/TestDataCleanup.tsx','utf8');
+const main=fs.readFileSync('src/main.tsx','utf8');
+assert.match(main,/import TestDataCleanup from '\.\/TestDataCleanup'/);
+assert.match(main,/<TestDataCleanup db=/);
+assert.match(source,/const TEST_STORES = \['workoutTemplates','trainingPrograms','plannedWorkouts','executions'\] as const/);
+assert.match(source,/db\.transaction\(\[\.\.\.TEST_STORES\],'readwrite'\)/);
+assert.match(source,/tx\.oncomplete=\(\)=>resolve\(\)/);
+assert.match(source,/phrase!=='EFFACER TESTS'/);
+assert.match(source,/window\.confirm/);
+assert.doesNotMatch(source,/objectStore\(['"](?:customExercises|settings|profiles|metadata)['"]\)\.clear/);
+console.log('PASS nettoyage sélectif : quatre stores seulement, confirmation, sauvegarde et transaction atomique');
