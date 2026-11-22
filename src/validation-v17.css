@@ -1,0 +1,14 @@
+/* V17: non-overlapping, unboxed validation and per-card missing-field cues. */
+.template-editor .lt-v17-alert, .panel > .lt-v17-alert {
+  display:flex; align-items:flex-start; gap:.45rem; margin:.6rem 0 .85rem;
+  padding:0; border:0; background:transparent; color:#ff8d91;
+  font-size:.94rem; line-height:1.45; overflow-wrap:anywhere;
+}
+.lt-v17-warning { color:#ff686e; font-weight:800; flex-shrink:0; }
+.template-editor .lt-v17-card-invalid { border-color:#df5a64; }
+.template-editor .lt-v17-field-invalid input,
+.template-editor .lt-v17-field-invalid select {
+  border:2px solid #f16a75 !important; box-shadow:0 0 0 1px rgba(241,106,117,.16);
+}
+.lt-v17-inline-error { color:#ff9198; font-size:.88rem; margin:.5rem 0; line-height:1.4; }
+.lt-v17-variant-note { margin:.45rem 0; }
