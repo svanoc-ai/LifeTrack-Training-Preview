@@ -37,17 +37,16 @@ function scoreColor(n:number, reverse:boolean):string {const v=reverse?11-n:n;re
 function chronoSeconds(v:string):number {const parts=v.split(':').map(Number);if(parts.some(x=>!Number.isFinite(x)||x<0))return 0;return parts.reduce((acc,x)=>acc*60+x,0);}
 function chronoShare(a:string,b:string):number {const x=chronoSeconds(a),y=chronoSeconds(b);return x+y?Math.round(x/(x+y)*100):0;}
 function chronoClock(value:string):string {const n=chronoSeconds(value),s=String(n%60).padStart(2,'0');return n>=3600?`${Math.floor(n/3600)}:${String(Math.floor(n%3600/60)).padStart(2,'0')}:${s}`:`${String(Math.floor(n/60)).padStart(2,'0')}:${s}`;}
-/** Accessible iPhone duration editor: numerical fields rather than a fragile text clock. */
+/** Duration parts preserve empty drafts while the iPhone keyboard is editing. */
+function DurationPart({label,value,max,onCommit}:{label:string;value:number;max:number;onCommit:(value:number)=>void}){
+ const [draft,setDraft]=useState<string|null>(null);
+ return <label><span>{label}</span><input type="number" inputMode="numeric" min="0" max={max} step="1" value={draft??String(value)} onFocus={e=>{setDraft(String(value));e.currentTarget.select()}} onChange={e=>{const raw=e.target.value;setDraft(raw);if(raw.trim()!==''&&Number.isFinite(Number(raw)))onCommit(Math.max(0,Math.min(max,Math.trunc(Number(raw)))))} } onBlur={()=>{if(draft!==null&&draft.trim()!=='')onCommit(Math.max(0,Math.min(max,Math.trunc(Number(draft)||0))));setDraft(null)}} aria-label={label}/></label>;
+}
 function MeasuredDurationEditor({label,value,onChange}:{label:string;value:string;onChange:(next:string)=>void}){
  const total=chronoSeconds(value);
  const fields=[{label:'Heures',n:Math.floor(total/3600),max:999},{label:'Minutes',n:Math.floor(total%3600/60),max:59},{label:'Secondes',n:total%60,max:59}];
- const change=(i:number,raw:string)=>{
-  const val=Math.max(0,Math.min(fields[i].max,Math.trunc(Number(raw)||0)));
-  const counts=fields.map(x=>x.n);counts[i]=val;
-  const next=counts[0]*3600+counts[1]*60+counts[2];
-  onChange(`${String(Math.floor(next/3600)).padStart(2,'0')}:${String(Math.floor(next%3600/60)).padStart(2,'0')}:${String(next%60).padStart(2,'0')}`);
- };
- return <fieldset className="lt-duration-editor"><legend>{label}</legend><div className="lt-duration-editor-grid">{fields.map((field,i)=><label key={field.label}><span>{field.label}</span><input type="number" inputMode="numeric" pattern="[0-9]*" min={0} max={field.max} step={1} value={field.n} onFocus={event=>event.currentTarget.select()} onChange={event=>change(i,event.target.value)} aria-label={`${label} — ${field.label.toLowerCase()}`}/></label>)}</div></fieldset>;
+ const change=(i:number,val:number)=>{const counts=fields.map(x=>x.n);counts[i]=val;const next=counts[0]*3600+counts[1]*60+counts[2];onChange(`${String(Math.floor(next/3600)).padStart(2,'0')}:${String(Math.floor(next%3600/60)).padStart(2,'0')}:${String(next%60).padStart(2,'0')}`)};
+ return <fieldset className="lt-duration-editor"><legend>{label}</legend><div className="lt-duration-editor-grid">{fields.map((field,i)=><DurationPart key={field.label} label={`${label} — ${field.label.toLowerCase()}`} value={field.n} max={field.max} onCommit={v=>change(i,v)}/>)}</div></fieldset>;
 }
 export default function SessionExecution({db,exercises,requestedPlan,onPlanConsumed,onBonusExerciseCreated,mode}:{onBonusExerciseCreated:(exercise:BonusExercise)=>void;mode:'execution'|'history';db:IDBDatabase|null;exercises:{id:string;name:string;kind?:'musculation'|'cardio';archived?:boolean;equipment?:string[]}[];requestedPlan:string|null;onPlanConsumed:()=>void}){
  const [templates,setTemplates]=useState<Template[]>([]),[plans,setPlans]=useState<Planned[]>([]),[session,setSession]=useState<Execution|null>(null),[choice,setChoice]=useState(''),[variantPanelOpen,setVariantPanelOpen]=useState(true),[resumePrompt,setResumePrompt]=useState(false),[review,setReview]=useState(false),[activeMin,setActiveMin]=useState(''),[restMin,setRestMin]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[clock,setClock]=useState(Date.now()),[history,setHistory]=useState<Execution[]>([]),[focusIndex,setFocusIndex]=useState(0),[showExerciseList,setShowExerciseList]=useState(false),[savedNotice,setSavedNotice]=useState(false),[formAfter,setFormAfter]=useState(7),[difficulty,setDifficulty]=useState(5),[comment,setComment]=useState(''),[sourceTab,setSourceTab]=useState<'types'|'history'>('types'),[sourceSearch,setSourceSearch]=useState(''),[historyLimit,setHistoryLimit]=useState(10),[focusSet,setFocusSet]=useState(1),[assessment,setAssessment]=useState<PendingAssessment|null>(null),[countdown,setCountdown]=useState<number|null>(null);

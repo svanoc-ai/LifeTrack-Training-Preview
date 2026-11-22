@@ -1,23 +1,5 @@
-import {useEffect,useRef,useState} from 'react';
-import {formatTargetDuration,parseTargetDuration} from './targetDuration';
 export default function DurationTargetInput({seconds,onChange,invalid}:{seconds:number|undefined;onChange:(value:number|undefined)=>void;invalid:boolean}) {
- const [text,setText]=useState(()=>formatTargetDuration(seconds));
- const [malformed,setMalformed]=useState(false);
- const editing=useRef(false);
- // Ne pas reformater pendant la frappe : iOS doit pouvoir saisir 1:02:00
- // sans que le champ ne redevienne 00:01 après le premier caractère.
- useEffect(()=>{if(!editing.current)setText(formatTargetDuration(seconds))},[seconds]);
- const change=(raw:string)=>{
-  setText(raw);
-  const result=parseTargetDuration(raw);
-  setMalformed(result===null);
-  if(result!==null)onChange(result);
- };
- return <label className={`target-field${invalid||malformed?' lt-v17-field-invalid':''}`}>
-  Durée cible par série (min:s ou h:min:s)
-  <input className={`profile-input${invalid||malformed?' lt-v18-invalid-input':''}`} aria-invalid={invalid||malformed} type="text" inputMode="text" autoComplete="off" placeholder="00:30 ou 1:02:00" value={text}
-   onFocus={e=>{editing.current=true;e.currentTarget.select()}} onChange={e=>change(e.target.value)}
-   onBlur={()=>{editing.current=false;const parsed=parseTargetDuration(text);if(parsed===null){setMalformed(true);onChange(undefined)}else{setMalformed(false);setText(formatTargetDuration(parsed))}}}/>
-  <small className="muted">Valeur stockée en secondes · maximum 4 h</small>
+ return <label className={`target-field lt-premium-seconds${invalid?' lt-v17-field-invalid':''}`}>Maintien cible
+  <span className="lt-premium-seconds-wrap"><input aria-label="Durée cible en secondes" aria-invalid={invalid} type="number" inputMode="numeric" min="1" max="14400" step="1" value={seconds??''} onFocus={e=>e.currentTarget.select()} onChange={e=>{const raw=e.target.value;onChange(raw===''?undefined:Math.min(14400,Math.max(0,Number(raw))))}}/><span>s</span></span>
  </label>;
 }

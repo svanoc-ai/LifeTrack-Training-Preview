@@ -591,7 +591,7 @@ function App() {
     navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
     document.addEventListener('visibilitychange', onVisibilityChange);
     window.addEventListener('online', checkForUpdates);
-    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, {scope: import.meta.env.BASE_URL})
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, {scope: import.meta.env.BASE_URL, updateViaCache: 'none'})
       .then(reg => {
         if (!live) return;
         registration = reg;
