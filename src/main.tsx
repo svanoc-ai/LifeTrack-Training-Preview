@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './style.css';
 import './v22-performance.css';
+import './v23-performance.css';
 import WorkoutEditor from './WorkoutEditor';
 import ProgramEditor from './ProgramEditor';
 import ProgramWizard from './ProgramWizard';
@@ -176,7 +177,7 @@ function validTarget(x: unknown): x is WorkoutTarget {
     Number.isInteger(t.order) && t.order >= 0 && t.order <= 200 &&
     numberField(t.sets, 100) && numberField(t.reps, 1000) && numberField(t.loadKg, 10000) &&
     numberField(t.restSeconds, 3600) && numberField(t.rir, 20) &&
-    (t.durationSeconds===undefined||(Number.isInteger(t.durationSeconds)&&t.durationSeconds>=1&&t.durationSeconds<=3600&&Number.isInteger(t.sets)&&t.sets!>=1&&t.sets!<=30)) && numberField(t.durationMinutes, 1440) && numberField(t.distanceKm, 1000) &&
+    (t.durationSeconds===undefined||(Number.isInteger(t.durationSeconds)&&t.durationSeconds>=1&&t.durationSeconds<=14400&&Number.isInteger(t.sets)&&t.sets!>=1&&t.sets!<=30)) && numberField(t.durationMinutes, 1440) && numberField(t.distanceKm, 1000) &&
     (t.supersetId === undefined || (typeof t.supersetId === 'string' && t.supersetId.length <= 128)) && numberField(t.blockRestBetweenExercisesSeconds,3600) && numberField(t.blockRestBetweenRoundsSeconds,3600);
 }
 function validTemplate(x: unknown): x is WorkoutTemplate {
@@ -373,6 +374,11 @@ function validExecution(v: unknown): v is Execution {
  validDate(x.startedAt)&&validDate(x.updatedAt)&&validDate(x.lastTick)&&(x.endedAt===null||validDate(x.endedAt)) &&
  ['active','paused','completed','partial','abandoned'].includes(x.status) &&
  [x.activeMs,x.pauseMs].every(n=>Number.isFinite(n)&&n>=0&&n<=864000000) &&
+ (x.restMs===undefined||(Number.isFinite(x.restMs)&&x.restMs>=0&&x.restMs<=864000000)) &&
+ (x.restRecords===undefined||(Array.isArray(x.restRecords)&&x.restRecords.length<=6000&&x.restRecords.every(r=>['series','exercise','round'].includes(r.kind)&&Number.isFinite(r.plannedSeconds)&&r.plannedSeconds>=0&&r.plannedSeconds<=3600&&Number.isFinite(r.actualMs)&&r.actualMs>=0&&r.actualMs<=86400000&&validDate(r.startedAt)&&(r.endedAt===undefined||r.endedAt===null||validDate(r.endedAt))))) &&
+ (x.restStartedAt===undefined||x.restStartedAt===null||validDate(x.restStartedAt)) &&
+ (x.restRemainingMs===undefined||(Number.isFinite(x.restRemainingMs)&&x.restRemainingMs>=0&&x.restRemainingMs<=86400000)) &&
+ (x.restUntil===undefined||x.restUntil===null||validDate(x.restUntil)) &&
  (x.timedSet==null||(typeof x.timedSet==='object'&&Number.isInteger(x.timedSet.index)&&x.timedSet.index>=0&&x.timedSet.index<x.targets.length&&Number.isInteger(x.timedSet.set)&&x.timedSet.set>=1&&x.timedSet.set<=30&&Number.isFinite(x.timedSet.elapsedMs)&&x.timedSet.elapsedMs>=0&&(x.timedSet.startedAt===null||validDate(x.timedSet.startedAt)))) &&
  Array.isArray(x.completedIndexes) && x.completedIndexes.every(i=>Number.isInteger(i)&&i>=0&&i<x.targets.length) &&
  new Set(x.completedIndexes).size===x.completedIndexes.length && typeof x.manualDuration==='boolean' &&
@@ -381,7 +387,7 @@ function validExecution(v: unknown): v is Execution {
  (x.exerciseResults===undefined || (Array.isArray(x.exerciseResults) && x.exerciseResults.length<=x.targets.length &&
  x.exerciseResults.every(r=>Number.isInteger(r.index)&&r.index>=0&&r.index<x.targets.length&&Array.isArray(r.sets)&&r.sets.length<=30&&
  (r.quality===undefined||['maitrisee','correcte','ameliorer'].includes(r.quality))&&
- r.sets.every(t=>Number.isInteger(t.set)&&t.set>=1&&t.set<=30&&Number.isInteger(t.reps)&&t.reps>=0&&t.reps<=999&&(t.durationSeconds===undefined||(Number.isInteger(t.durationSeconds)&&t.durationSeconds>=0&&t.durationSeconds<=3600))&&Number.isFinite(t.loadKg)&&t.loadKg>=0&&t.loadKg<=2000&&(t.rir===null||Number.isInteger(t.rir)&&t.rir>=0&&t.rir<=6))&&
+ r.sets.every(t=>Number.isInteger(t.set)&&t.set>=1&&t.set<=30&&Number.isInteger(t.reps)&&t.reps>=0&&t.reps<=999&&(t.durationSeconds===undefined||(Number.isInteger(t.durationSeconds)&&t.durationSeconds>=0&&t.durationSeconds<=14400))&&Number.isFinite(t.loadKg)&&t.loadKg>=0&&t.loadKg<=2000&&(t.rir===null||Number.isInteger(t.rir)&&t.rir>=0&&t.rir<=6))&&
  new Set(r.sets.map(t=>t.set)).size===r.sets.length)&&new Set(x.exerciseResults.map(r=>r.index)).size===x.exerciseResults.length));
 }
 function validateBackup(value: unknown): BackupDocument {

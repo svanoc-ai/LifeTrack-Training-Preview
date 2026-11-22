@@ -1,0 +1,29 @@
+/* V23 — chronographe instrument premium : conception au ratio 1:1, inspirée de
+   la maquette de référence fournie le 22/11. Protection iPhone Safari / PWA. */
+.lt-v23-chrono{width:100%;max-width:100%;box-sizing:border-box;overflow:hidden;background:radial-gradient(ellipse 92% 70% at 50% 36%,#10293a 0%,#0b1c2b 48%,#07121e 100%);border-radius:17px;color:#f7fbff;padding:16px 12px 13px;margin:1.2rem 0;box-shadow:inset 0 1px 0 #2a4253,0 18px 40px #03101b66;font-family:inherit}
+.lt-v23-chrono-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;font-size:clamp(.52rem,1.8vw,.7rem);font-weight:800;letter-spacing:.09em;white-space:nowrap}
+.lt-v23-chrono-heading>span{color:#dce9f3}.lt-v23-chrono-heading b{color:#8ea3b0;font-weight:600}.lt-v23-chrono-heading small{font-size:.72em;letter-spacing:.05em;color:#36d7c6;font-weight:800}
+.lt-v23-chrono-dial{--lt-v23-dial-size:min(76vw,310px);box-sizing:border-box;position:relative;width:var(--lt-v23-dial-size);max-width:100%;aspect-ratio:1/1;margin:19px auto 0;isolation:isolate;display:grid;place-items:center;flex:none}
+.lt-v23-chrono-ticks{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible;opacity:.9}
+.lt-v23-chrono-ring{width:78%;height:78%;aspect-ratio:1;position:relative;box-sizing:border-box;display:grid;place-items:center;border-radius:50%;background:conic-gradient(from 0deg,#56f5db 0%,#36d7c6 var(--lt-v23-active-share),#47647a var(--lt-v23-active-share),#47647a 100%);box-shadow:0 0 0 5px #0b2633,0 0 0 7px #244759,0 0 21px #36d7c675, inset 0 0 10px #c5fff8aa;z-index:2}
+.lt-v23-chrono-ring:after{content:"";pointer-events:none;position:absolute;inset:8px;border-radius:50%;border:1px solid #79ede3a8;box-shadow:inset 0 0 9px #0e2839;z-index:1}
+.lt-v23-chrono-inner{position:absolute;inset:12px;border-radius:50%;background:radial-gradient(ellipse at 50% 33%,#172d3b 0%,#0b1826 65%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;z-index:2;box-shadow:inset 0 0 0 2px #263f4e,inset 0 0 0 9px #071824}
+.lt-v23-chrono-inner span{font-size:clamp(.58rem,2.4vw,.75rem);letter-spacing:.26em;font-weight:700;color:#a7c0c9}
+.lt-v23-chrono-inner strong{font-size:clamp(2.05rem,10vw,3.05rem);line-height:1.05;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap;color:#fff;text-shadow:0 0 14px #ffffff3a;font-weight:750}
+.lt-v23-chrono-inner small{font-size:clamp(.56rem,2.1vw,.7rem);letter-spacing:.22em;color:#52d4c6;font-weight:700}
+.lt-v23-chrono-marker{z-index:4;position:absolute;top:-1.5%;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:#c4fff7;border:1px solid #fbffff;box-shadow:0 0 5px 3px #60f5dfad,0 0 19px #36d7c6}
+.lt-v23-chrono-ratio{color:#b3c3ce;font-size:clamp(.7rem,2.7vw,.85rem);margin:12px 0 20px;text-align:center;font-weight:500}
+.lt-v23-chrono-bottom{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:0 5px;margin-top:2px;text-align:center}
+.lt-v23-chrono-bottom>div{display:grid;gap:8px;min-width:0}
+.lt-v23-chrono-bottom>div+div{border-left:1px solid #304a5a}
+.lt-v23-chrono-bottom span{font-size:clamp(.58rem,2.4vw,.74rem);color:#a6b9c7;font-weight:650;letter-spacing:.04em;white-space:nowrap}
+.lt-v23-chrono-bottom strong{font-size:clamp(1.16rem,5.3vw,1.55rem);font-variant-numeric:tabular-nums;color:#fff}
+.lt-v23-chrono-signature{margin:23px 0 0;padding:15px 0 2px;border-top:1px solid #2b4354;color:#39cabb;text-align:center;font-size:1.02rem;font-weight:650}
+.lt-v23-chrono-signature span{color:#dbe9ef;margin-left:6px}
+.lt-v23-interruption{font-size:.76rem;line-height:1.4;color:#91aab7;text-align:center;margin:14px 0 7px}.lt-v23-interruption small{color:#809bac}
+.lt-v23-chrono .lt-v22-chrono-adjust{border-top:1px solid #243d4c;padding:10px 2px 0;margin-top:9px;text-align:left}.lt-v23-chrono .lt-v22-chrono-adjust summary{font-size:.77rem;font-weight:600}.lt-v23-chrono .lt-v22-chrono-adjust label{line-height:1.4}
+.lt-v23-load-note{grid-column:1/-1;max-width:100%;margin:.1rem 0 .5rem}
+@media (max-width:360px){.lt-v23-chrono{padding-inline:9px}.lt-v23-chrono-dial{--lt-v23-dial-size:min(75vw,276px)}.lt-v23-chrono-heading{letter-spacing:.04em}.lt-v23-chrono-heading b{letter-spacing:0}.lt-v23-chrono-inner{gap:6px}}
+@media (prefers-reduced-motion:reduce){.lt-v23-chrono *{animation:none!important;transition:none!important}}
+
+.lt-v23-chrono-planned{margin:-10px 0 17px;text-align:center;color:#819da8;font-size:.68rem;letter-spacing:.02em}

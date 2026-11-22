@@ -7,7 +7,7 @@ export type StatsActivity='Musculation'|'Tapis'|'Vélo'|'Randonnée'|'Autre';
 export type StatsSummary={
  period:StatsPeriod; sessions:number; completeSessions:number; partialSessions:number;
  strengthSets:number; nominalVolumeKgReps:number; isometricSeconds:number;
- elapsedMs:number|null; recordedActiveMs:number|null; recordedPauseMs:number|null; restMs:null;
+ elapsedMs:number|null; recordedActiveMs:number|null; recordedPauseMs:number|null; restMs:number|null; plannedRestMs:number|null; sessionsWithMeasuredRest:number;
  durationsRecorded:number; cardioDurationMinutes:number|null; cardioDistanceKm:number|null; cardioAscentM:number|null;
  plannedDue:number; plannedFulfilled:number; adherencePct:number|null;
  sessionsPerWeek:number; byWeek:{week:string;sessions:number}[];
@@ -32,7 +32,7 @@ export function calculateStats(executions:readonly Execution[],planned:readonly 
  const activitySessions=zeroActivity(),activityMinutes=zeroActivity();
  const weekCounts=new Map<string,number>();
  let sessions=0,completeSessions=0,partialSessions=0,strengthSets=0,nominalVolumeKgReps=0,isometricSeconds=0;
- let elapsedMs=0,recordedActiveMs=0,recordedPauseMs=0,durationsRecorded=0,cardioDurationMinutes=0,cardioDistanceKm=0,cardioAscentM=0;
+ let elapsedMs=0,recordedActiveMs=0,recordedPauseMs=0,measuredRestMs=0,plannedRestMs=0,sessionsWithMeasuredRest=0,durationsRecorded=0,cardioDurationMinutes=0,cardioDistanceKm=0,cardioAscentM=0;
  let cardioDurationKnown=false,cardioDistanceKnown=false,cardioAscentKnown=false;
  const fulfilled=new Set<string>();
  for(const s of executions){
@@ -42,7 +42,11 @@ export function calculateStats(executions:readonly Execution[],planned:readonly 
   if(s.plannedId)fulfilled.add(s.plannedId);
   const week=monday(day);weekCounts.set(week,(weekCounts.get(week)||0)+1);
   if(finiteNonnegative(s.activeMs)&&finiteNonnegative(s.pauseMs)){
-   recordedActiveMs+=s.activeMs;recordedPauseMs+=s.pauseMs;elapsedMs+=s.activeMs+s.pauseMs;durationsRecorded++;
+   recordedActiveMs+=s.activeMs;
+   recordedPauseMs+=s.pauseMs;
+   if(typeof s.restMs==='number'&&Number.isFinite(s.restMs)&&s.restMs>=0){measuredRestMs+=s.restMs;plannedRestMs+=(s.restRecords??[]).reduce((n,r)=>n+r.plannedSeconds*1000,0);sessionsWithMeasuredRest++;elapsedMs+=s.activeMs+s.restMs;}
+   else {elapsedMs+=s.activeMs+s.pauseMs;} // Legacy: no fabricated recovery history.
+   durationsRecorded++;
   }
   const used=new Set<StatsActivity>();
   s.targets.forEach((t,i)=>{
@@ -72,7 +76,7 @@ export function calculateStats(executions:readonly Execution[],planned:readonly 
  }
  const days=dayIndex(period.end)-dayIndex(period.start)+1;
  return {period,sessions,completeSessions,partialSessions,strengthSets,nominalVolumeKgReps,isometricSeconds,
-  elapsedMs:durationsRecorded?elapsedMs:null,recordedActiveMs:durationsRecorded?recordedActiveMs:null,recordedPauseMs:durationsRecorded?recordedPauseMs:null,restMs:null,
+  elapsedMs:durationsRecorded?elapsedMs:null,recordedActiveMs:durationsRecorded?recordedActiveMs:null,recordedPauseMs:durationsRecorded?recordedPauseMs:null,restMs:sessionsWithMeasuredRest?measuredRestMs:null,plannedRestMs:sessionsWithMeasuredRest?plannedRestMs:null,sessionsWithMeasuredRest,
   durationsRecorded,cardioDurationMinutes:cardioDurationKnown?cardioDurationMinutes:null,cardioDistanceKm:cardioDistanceKnown?cardioDistanceKm:null,cardioAscentM:cardioAscentKnown?cardioAscentM:null,
   plannedDue,plannedFulfilled,adherencePct:plannedDue?100*plannedFulfilled/plannedDue:null,
   sessionsPerWeek:sessions*7/days,byWeek:[...weekCounts].sort(([a],[b])=>a.localeCompare(b)).map(([week,count])=>({week,sessions:count})),activitySessions,activityMinutes};
