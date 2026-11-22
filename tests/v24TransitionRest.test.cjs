@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');const path=require('node:path');const vm=require('node:vm');const ts=require('typescript');
+const code=fs.readFileSync(path.join(__dirname,'../src/trainingBlocks.ts'),'utf8');
+const out={};vm.runInNewContext(ts.transpileModule(code,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports:out,Math,Set});
+const step=(targets,index,set)=>out.nextBlockStep(targets,()=>false,index,set);
+assert.equal(step([{sets:1},{sets:1}],0,1).restSeconds,120,'historic default preserved');
+assert.equal(step([{sets:1,betweenExerciseRestSeconds:35},{sets:1}],0,1).restSeconds,35,'custom transition honored');
+assert.equal(step([{sets:1,betweenExerciseRestSeconds:0},{sets:1}],0,1).restSeconds,0,'immediate transition supported');
+assert.equal(step([{sets:2,betweenExerciseRestSeconds:40,restSeconds:65},{sets:1}],0,1).restSeconds,65,'between series rest unchanged');
+assert.equal(step([{sets:1,betweenExerciseRestSeconds:4000},{sets:1}],0,1).restSeconds,3600,'safe upper bound');
+const editor=fs.readFileSync(path.join(__dirname,'../src/WorkoutEditor.tsx'),'utf8');
+assert.match(editor,/Repos avant exercice suivant \(s\)/);
+assert.match(editor,/variantCount>1&&<button/);
+const execution=fs.readFileSync(path.join(__dirname,'../src/SessionExecution.tsx'),'utf8');
+assert.match(execution,/<MeasuredDurationEditor label="Temps actif"/);
+assert.match(execution,/<MeasuredDurationEditor label="Récupération effective"/);
+console.log('PASS V24 transition rest and iPhone duration editor checks');

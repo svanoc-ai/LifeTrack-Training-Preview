@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),ts=require('typescript');
+const transpile=f=>ts.transpileModule(fs.readFileSync(path.join(__dirname,'../src/'+f),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+const out={};const groups={MUSCLE_GROUPS:{pectoraux:['pectoralis_clavicular','pectoralis_sternocostal'],abdominaux:['transversus','obliques']}};
+vm.runInNewContext(transpile('anatomy20.ts'),{exports:out,require:()=>groups,Set,Object,Array});
+const snapshot={exerciseId:'std:test',mapping:{primary:['rectus_abdominis','transversus'],secondary:['obliques','transversus']}};
+const make=(s)=>({status:'completed',endedAt:'2026-11-22',targets:[{exerciseId:'std:test',muscleSnapshot:s}],exerciseResults:[{index:0,sets:[{validated:true},{validated:true}]}]});
+const result=out.summary20FromSnapshots([make(snapshot),make(null)],'2026-11-21','2026-11-23');
+assert.equal(result.classifiedSets,2);assert.equal(result.unknownSets,2);
+assert.equal(result.groups['Abdominaux'].primary,2,'multiple core muscles must not inflate counts');
+assert.equal(result.groups['Obliques'].secondary,.5);
+assert.equal(result.groups['Tibial antérieur'].total,0,'no fabricated training activity');
+assert.equal(result.taxonomyVersion,20);
+console.log('PASS conservative 20-group derived statistics');

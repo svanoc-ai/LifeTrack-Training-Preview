@@ -1,0 +1,13 @@
+const fs=require('node:fs');const assert=require('node:assert/strict');
+const stats=fs.readFileSync('src/StatsDashboard.tsx','utf8');
+assert.match(stats,/summary20FromSnapshots\(executions,period.start,period.end\)/);
+assert.match(stats,/GROUPS_20\.map\(group/);
+assert.match(stats,/anciennes données ne sont pas recalculées/);
+assert.match(stats,/view==='anatomie'&&<AnatomyPrototype/);
+const workouts=fs.readFileSync('src/WorkoutEditor.tsx','utf8');
+assert.match(workouts,/variantCount>1&&<button/);
+assert.match(workouts,/betweenExerciseRestSeconds\?\?120/);
+const version=fs.readFileSync('src/version.ts','utf8');
+const sw=fs.readFileSync('public/sw.js','utf8');
+const v=version.match(/APP_VERSION = '([^']+)'/)[1];assert.equal(v,sw.match(/VERSION = '([^']+)'/)[1]);
+console.log('PASS V24 statistiques 20 groupes, compatibilité UI, version PWA');
