@@ -1,3 +1,3 @@
 // Source unique de la version applicative. Le cache PWA est synchronisé à la compilation.
-export const APP_VERSION = '2-G.0.3';
+export const APP_VERSION = '2-G.0.4';
 export const BUILD_DATE = '2026-11-22';

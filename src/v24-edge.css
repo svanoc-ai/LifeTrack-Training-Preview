@@ -30,3 +30,12 @@
  .template-editor>.lt-edge-exercises .target-card{margin:8px 0}
  .lt-edge-exercises .lt-premium-heading .lt-premium-type{font-size:10px}
 }
+
+/* 2-G.0.4 — largeur utile iPhone : supprimer les marges cumulées */
+@media(max-width:650px){
+ .panel:has(.template-editor){padding-inline:4px!important}
+ .template-editor>.lt-edge-section{padding-inline:6px!important}
+ .lt-edge-exercises .lt-premium-heading{padding-left:10px!important;padding-right:34px!important}
+ .lt-edge-exercises .lt-premium-card{padding-inline:9px!important}
+ .lt-edge-exercises .template-actions{padding-inline:9px!important}
+}
