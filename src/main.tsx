@@ -149,7 +149,7 @@ function validExercise(x: unknown): x is Exercise {
 type WorkoutTarget = {
   executionMode?:'repetitions'|'maintien'|'effort-chronometre';
   exerciseId: string; order: number; sets?: number; reps?: number;
-  loadKg?: number; restSeconds?: number; rir?: number;
+  loadKg?: number; restSeconds?: number; betweenExerciseRestSeconds?: number; rir?: number;
   durationSeconds?: number; durationMinutes?: number; distanceKm?: number; supersetId?: string; blockRestBetweenExercisesSeconds?:number;blockRestBetweenRoundsSeconds?:number;
 };
 type WorkoutTemplate = {
