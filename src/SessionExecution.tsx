@@ -7,7 +7,7 @@ import {loadLabel} from './measurementLabels';
 import {MAX_TARGET_SECONDS} from './targetDuration';
 import {useEffect,useRef,useState} from 'react';
 export type BonusExercise={id:string;name:string;kind:'musculation'|'cardio';muscles:string[];equipment:string[];measurement:'series-repetitions'|'duree-distance';origin:'custom';archived:boolean};
-export type Target={executionMode?:'repetitions'|'maintien'|'effort-chronometre';variantId?:string;muscleSnapshot?:MuscleSnapshot|null;bonus?:boolean;exerciseId:string;order:number;sets?:number;reps?:number;repMin?:number;repMax?:number;loadKg?:number;restSeconds?:number;rir?:number;durationSeconds?:number;durationMinutes?:number;distanceKm?:number;supersetId?:string;blockRestBetweenExercisesSeconds?:number;blockRestBetweenRoundsSeconds?:number};
+export type Target={executionMode?:'repetitions'|'maintien'|'effort-chronometre';variantId?:string;muscleSnapshot?:MuscleSnapshot|null;bonus?:boolean;exerciseId:string;order:number;sets?:number;reps?:number;repMin?:number;repMax?:number;loadKg?:number;restSeconds?:number;betweenExerciseRestSeconds?:number;rir?:number;durationSeconds?:number;durationMinutes?:number;distanceKm?:number;supersetId?:string;blockRestBetweenExercisesSeconds?:number;blockRestBetweenRoundsSeconds?:number};
 type Template={id:string;name:string;archived:boolean;targets:Target[]};
 type Planned={id:string;date:string;templateId:string;status:'planned'|'cancelled'|'completed'|'partial'|'abandoned';updatedAt:string};
 export type SetResult={set:number;reps:number;loadKg:number;rir:number|null;durationSeconds?:number;rpe?:number|null;validated?:boolean};
@@ -37,6 +37,18 @@ function scoreColor(n:number, reverse:boolean):string {const v=reverse?11-n:n;re
 function chronoSeconds(v:string):number {const parts=v.split(':').map(Number);if(parts.some(x=>!Number.isFinite(x)||x<0))return 0;return parts.reduce((acc,x)=>acc*60+x,0);}
 function chronoShare(a:string,b:string):number {const x=chronoSeconds(a),y=chronoSeconds(b);return x+y?Math.round(x/(x+y)*100):0;}
 function chronoClock(value:string):string {const n=chronoSeconds(value),s=String(n%60).padStart(2,'0');return n>=3600?`${Math.floor(n/3600)}:${String(Math.floor(n%3600/60)).padStart(2,'0')}:${s}`:`${String(Math.floor(n/60)).padStart(2,'0')}:${s}`;}
+/** Accessible iPhone duration editor: numerical fields rather than a fragile text clock. */
+function MeasuredDurationEditor({label,value,onChange}:{label:string;value:string;onChange:(next:string)=>void}){
+ const total=chronoSeconds(value);
+ const fields=[{label:'Heures',n:Math.floor(total/3600),max:999},{label:'Minutes',n:Math.floor(total%3600/60),max:59},{label:'Secondes',n:total%60,max:59}];
+ const change=(i:number,raw:string)=>{
+  const val=Math.max(0,Math.min(fields[i].max,Math.trunc(Number(raw)||0)));
+  const counts=fields.map(x=>x.n);counts[i]=val;
+  const next=counts[0]*3600+counts[1]*60+counts[2];
+  onChange(`${String(Math.floor(next/3600)).padStart(2,'0')}:${String(Math.floor(next%3600/60)).padStart(2,'0')}:${String(next%60).padStart(2,'0')}`);
+ };
+ return <fieldset className="lt-duration-editor"><legend>{label}</legend><div className="lt-duration-editor-grid">{fields.map((field,i)=><label key={field.label}><span>{field.label}</span><input type="number" inputMode="numeric" pattern="[0-9]*" min={0} max={field.max} step={1} value={field.n} onFocus={event=>event.currentTarget.select()} onChange={event=>change(i,event.target.value)} aria-label={`${label} — ${field.label.toLowerCase()}`}/></label>)}</div></fieldset>;
+}
 export default function SessionExecution({db,exercises,requestedPlan,onPlanConsumed,onBonusExerciseCreated,mode}:{onBonusExerciseCreated:(exercise:BonusExercise)=>void;mode:'execution'|'history';db:IDBDatabase|null;exercises:{id:string;name:string;kind?:'musculation'|'cardio';archived?:boolean;equipment?:string[]}[];requestedPlan:string|null;onPlanConsumed:()=>void}){
  const [templates,setTemplates]=useState<Template[]>([]),[plans,setPlans]=useState<Planned[]>([]),[session,setSession]=useState<Execution|null>(null),[choice,setChoice]=useState(''),[variantPanelOpen,setVariantPanelOpen]=useState(true),[resumePrompt,setResumePrompt]=useState(false),[review,setReview]=useState(false),[activeMin,setActiveMin]=useState(''),[restMin,setRestMin]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[clock,setClock]=useState(Date.now()),[history,setHistory]=useState<Execution[]>([]),[focusIndex,setFocusIndex]=useState(0),[showExerciseList,setShowExerciseList]=useState(false),[savedNotice,setSavedNotice]=useState(false),[formAfter,setFormAfter]=useState(7),[difficulty,setDifficulty]=useState(5),[comment,setComment]=useState(''),[sourceTab,setSourceTab]=useState<'types'|'history'>('types'),[sourceSearch,setSourceSearch]=useState(''),[historyLimit,setHistoryLimit]=useState(10),[focusSet,setFocusSet]=useState(1),[assessment,setAssessment]=useState<PendingAssessment|null>(null),[countdown,setCountdown]=useState<number|null>(null);
 
@@ -242,12 +254,12 @@ export default function SessionExecution({db,exercises,requestedPlan,onPlanConsu
  </div>
  <p className="lt-v23-chrono-ratio">{chronoShare(activeMin,restMin)} % du temps enregistré en activité</p>
  {session.restRecords?.length? <p className="lt-v23-chrono-planned">Récupérations déclenchées : {session.restRecords.length} · objectif initial {session.restRecords.reduce((n,record)=>n+record.plannedSeconds,0)} s</p>:null}
- <div className="lt-v23-chrono-bottom"><div><span>◉ RÉCUPÉRATION</span><strong>{chronoClock(restMin)}</strong></div><div><span>◷ TEMPS TOTAL</span><strong>{chronoClock(format(chronoSeconds(activeMin)*1000+chronoSeconds(restMin)*1000))}</strong></div></div>
+ <div className="lt-v23-chrono-bottom"><div><span>◉ RÉCUPÉRATION</span><strong>{chronoSeconds(restMin)} s</strong></div><div><span>◷ TEMPS TOTAL</span><strong>{chronoClock(format(chronoSeconds(activeMin)*1000+chronoSeconds(restMin)*1000))}</strong></div></div>
  <p className="lt-v23-chrono-signature">♢ <span>Chaque seconde compte.</span></p>
  <p className="lt-v23-interruption">Interruptions : {chronoClock(format(reviewBase.current?.pauseMs??session.pauseMs))} <small>(hors temps total)</small></p>
  <details className="lt-v22-chrono-adjust"><summary>Corriger les durées mesurées</summary>
- <label>Temps actif (hh:mm:ss)<input className="profile-input" type="text" inputMode="text" placeholder="00:00:00" value={activeMin} onChange={e=>setActiveMin(e.target.value)}/></label>
- <label>Récupération effective (hh:mm:ss)<input className="profile-input" type="text" inputMode="text" placeholder="00:00:00" value={restMin} onChange={e=>setRestMin(e.target.value)}/></label>
+ <MeasuredDurationEditor label="Temps actif" value={activeMin} onChange={setActiveMin}/>
+ <MeasuredDurationEditor label="Récupération effective" value={restMin} onChange={setRestMin}/>
  </details>
  </section><label className="field-label">Commentaires sur ma séance (facultatif)<textarea className="profile-input lt-session-comment" rows={4} value={comment} onChange={e=>setComment(e.target.value)} placeholder="Sensations, progression, difficultés, ajustements…" /></label><p className="muted small">Les exercices non cochés resteront non réalisés.</p><div className="profile-actions"><button className="primary-button" disabled={busy} onClick={()=>void finish()}>Confirmer et enregistrer</button>{allExercisesDone(session)&&<button className="secondary-button" disabled={busy||session.targets.length>=200} onClick={openBonus}>+ Ajouter un exercice bonus</button>}</div></div>}</>}</div>:<TrainingHistory history={history} exercises={exercises} onSave={saveHistoryCorrection} onDelete={deleteHistorySession}/>}</div>
 }

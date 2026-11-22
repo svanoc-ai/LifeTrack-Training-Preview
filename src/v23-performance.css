@@ -27,3 +27,13 @@
 @media (prefers-reduced-motion:reduce){.lt-v23-chrono *{animation:none!important;transition:none!important}}
 
 .lt-v23-chrono-planned{margin:-10px 0 17px;text-align:center;color:#819da8;font-size:.68rem;letter-spacing:.02em}
+
+/* Consol. V24 — édition des durées adaptée au tactile Safari et PWA. */
+.lt-duration-editor{border:0;padding:0;margin:1rem 0;min-width:0;max-width:100%}
+.lt-duration-editor legend{font-weight:600;color:#cad9e2;margin-bottom:.55rem}
+.lt-duration-editor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;max-width:100%}
+.lt-duration-editor-grid label{display:flex;flex-direction:column;gap:.35rem;min-width:0;color:#abc1ce;font-size:.82rem}
+.lt-duration-editor-grid input{box-sizing:border-box;width:100%;min-width:0;border:1px solid #436578;border-radius:12px;background:#243340;color:#f5fafc;font-size:1.35rem;text-align:center;padding:.75rem .15rem;font-variant-numeric:tabular-nums}
+.lt-transition-rest{grid-column:1/-1;padding:.75rem;border:1px solid #35576a;border-radius:12px;background:rgba(54,215,198,.05)}
+.lt-transition-rest .target-field{max-width:100%}
+.lt-transition-rest small{display:block;margin-top:.25rem}

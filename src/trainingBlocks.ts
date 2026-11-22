@@ -1,5 +1,5 @@
 /** Ordering and rest rules for contiguous exercise blocks. Pure functions; no React dependency. */
-export type BlockTarget={supersetId?:string;sets?:number;restSeconds?:number;blockRestBetweenExercisesSeconds?:number;blockRestBetweenRoundsSeconds?:number};
+export type BlockTarget={supersetId?:string;sets?:number;restSeconds?:number;betweenExerciseRestSeconds?:number;blockRestBetweenExercisesSeconds?:number;blockRestBetweenRoundsSeconds?:number};
 export type BlockSet={index:number;set:number};
 export type BlockStep=BlockSet&{restSeconds:number;restKind:'series'|'exercise';blockLabel?:string;round?:number};
 const count=(t:BlockTarget)=>Math.max(1,Math.min(30,Math.floor(t.sets||1)));
@@ -43,6 +43,6 @@ export function nextBlockStep(targets:BlockTarget[],done:(index:number,set:numbe
  const settings=targets[members[0]];
  const seconds=inSameBlock
   ?endOfRound?(settings.blockRestBetweenRoundsSeconds??90):(settings.blockRestBetweenExercisesSeconds??0)
-  :next.index===currentIndex?(targets[currentIndex].restSeconds??90):120;
+  :next.index===currentIndex?(targets[currentIndex].restSeconds??90):(targets[currentIndex].betweenExerciseRestSeconds??120);
  return {...next,restSeconds:Math.max(0,Math.min(3600,seconds)),restKind:next.index===currentIndex?'series':'exercise',blockLabel:inSameBlock?targets[currentIndex].supersetId:undefined,round:inSameBlock?next.set:undefined};
 }

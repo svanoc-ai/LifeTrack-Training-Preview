@@ -176,7 +176,7 @@ function validTarget(x: unknown): x is WorkoutTarget {
   return (t.executionMode===undefined||['repetitions','maintien','effort-chronometre'].includes(t.executionMode)) && typeof t.exerciseId === 'string' && t.exerciseId.length > 0 && t.exerciseId.length <= 128 &&
     Number.isInteger(t.order) && t.order >= 0 && t.order <= 200 &&
     numberField(t.sets, 100) && numberField(t.reps, 1000) && numberField(t.loadKg, 10000) &&
-    numberField(t.restSeconds, 3600) && numberField(t.rir, 20) &&
+    numberField(t.restSeconds, 3600) && numberField(t.betweenExerciseRestSeconds, 3600) && numberField(t.rir, 20) &&
     (t.durationSeconds===undefined||(Number.isInteger(t.durationSeconds)&&t.durationSeconds>=1&&t.durationSeconds<=14400&&Number.isInteger(t.sets)&&t.sets!>=1&&t.sets!<=30)) && numberField(t.durationMinutes, 1440) && numberField(t.distanceKm, 1000) &&
     (t.supersetId === undefined || (typeof t.supersetId === 'string' && t.supersetId.length <= 128)) && numberField(t.blockRestBetweenExercisesSeconds,3600) && numberField(t.blockRestBetweenRoundsSeconds,3600);
 }
