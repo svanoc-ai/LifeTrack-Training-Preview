@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const {spawnSync}=require('node:child_process');
+const source=fs.readFileSync('src/main.tsx','utf8');
+assert.match(source,/LibraryIntegrityPanel db=/);
+const script=`import {auditLibraryLinks} from './src/libraryIntegrity.ts';
+const base={exercises:[{id:'std:a',name:'A'}],variants:[{id:'variant:a',exerciseId:'std:a'}],templates:[{id:'t1',name:'Séance',targets:[{exerciseId:'std:a',variantId:'variant:a'}]}],programs:[{id:'p1',name:'Programme',templateIds:['t1']}],plans:[{id:'plan1',templateId:'t1',programId:'p1'}],executions:[{id:'e1',templateId:'t1',plannedId:'plan1',status:'completed',targets:[{exerciseId:'std:a',variantId:'variant:a',muscleSnapshot:{exerciseId:'std:a',variantId:'variant:a'}}]}]};
+const ok=auditLibraryLinks(base);if(ok.issues.length!==0||ok.stats.snapshots!==1)throw Error('Liens valides');
+const broken=auditLibraryLinks({...base,programs:[{id:'p1',name:'Programme',templateIds:['absent']}],plans:[{id:'plan1',templateId:'absent',programId:'p1'}],executions:[{id:'e1',status:'completed',targets:[{exerciseId:'std:missing'}]}]});
+if(!broken.issues.some(x=>x.area==='Programmes')||!broken.issues.some(x=>x.area==='Calendrier')||!broken.issues.some(x=>x.area==='Historique')||broken.stats.unclassified!==1)throw Error('Liens rompus non détectés');
+const immutable=JSON.stringify(base);auditLibraryLinks(base);if(JSON.stringify(base)!==immutable)throw Error('Mutation détectée');
+console.log('PASS audit transversal bibliothèque, programmes, historique et anatomie');`;
+const run=spawnSync(process.execPath,['--experimental-strip-types','--input-type=module','-e',script],{encoding:'utf8'});assert.equal(run.status,0,run.stderr);process.stdout.write(run.stdout);
