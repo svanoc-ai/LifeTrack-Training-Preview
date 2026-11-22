@@ -4,6 +4,7 @@ import Catalogue20Preview from './Catalogue20Preview';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './style.css';
+import './v22-performance.css';
 import WorkoutEditor from './WorkoutEditor';
 import ProgramEditor from './ProgramEditor';
 import ProgramWizard from './ProgramWizard';
@@ -78,6 +79,32 @@ const STANDARD_EXERCISES: Exercise[] = [
   ['adduction-hanche-debout','Adduction de hanche debout','musculation',['Adducteurs'],['Bandes élastiques']],
   ['mollets-assis-resistance','Mollets assis avec résistance','musculation',['Mollets'],['Bandes élastiques']],
   ['dorsiflexion-elastique-assise','Dorsiflexion élastique assise','musculation',['Tibial antérieur'],['Bandes élastiques']],
+  // V22 — 25 mouvements distincts, sélectionnés parmi les candidats restants.
+  ["developpe-pectoral-elastiques","Développé pectoral élastiques",'musculation',["Pectoraux", "Triceps", "Deltoïdes antérieurs"],["SmartWorkout"]],
+  ["ecartes-pectoraux-elastiques","Écartés pectoraux élastiques",'musculation',["Pectoraux", "Deltoïdes antérieurs"],["SmartWorkout"]],
+  ["pull-over-elastique","Pull-over élastique",'musculation',["Grand dorsal", "Pectoraux"],["SmartWorkout"]],
+  ["tirage-bras-tendus","Tirage bras tendus",'musculation',["Grand dorsal", "Triceps"],["SmartWorkout"]],
+  ["rowing-unilateral","Rowing unilatéral",'musculation',["Grand dorsal", "Rhomboïdes", "Biceps", "Deltoïdes postérieurs"],["SmartWorkout"]],
+  ["rowing-prise-large","Rowing prise large",'musculation',["Rhomboïdes", "Trapèzes", "Deltoïdes postérieurs", "Biceps"],["SmartWorkout"]],
+  ["shrugs-elastiques","Shrugs élastiques",'musculation',["Trapèzes"],["SmartWorkout"]],
+  ["retraction-scapulaire-elastiques","Rétraction scapulaire élastiques",'musculation',["Rhomboïdes", "Trapèzes"],["SmartWorkout"]],
+  ["good-morning-elastique","Good morning élastique",'musculation',["Ischio-jambiers", "Fessiers", "Lombaires"],["SmartWorkout"]],
+  ["developpe-militaire-debout","Développé militaire debout",'musculation',["Deltoïdes antérieurs", "Deltoïdes latéraux", "Triceps"],["SmartWorkout"]],
+  ["elevation-laterale-unilaterale","Élévation latérale unilatérale",'musculation',["Deltoïdes latéraux", "Trapèzes"],["SmartWorkout"]],
+  ["oiseau-buste-penche","Oiseau buste penché",'musculation',["Deltoïdes postérieurs", "Rhomboïdes", "Trapèzes"],["SmartWorkout"]],
+  ["curl-biceps-supination","Curl biceps supination",'musculation',["Biceps", "Avant-bras"],["SmartWorkout"]],
+  ["curl-concentration-debout","Curl concentration debout",'musculation',["Biceps"],["SmartWorkout"]],
+  ["extension-triceps-au-dessus-de-la-tete","Extension triceps au-dessus de la tête",'musculation',["Triceps"],["SmartWorkout"]],
+  ["pushdown-triceps-elastiques","Pushdown triceps élastiques",'musculation',["Triceps"],["SmartWorkout"]],
+  ["kickback-triceps","Kickback triceps",'musculation',["Triceps"],["SmartWorkout"]],
+  ["pallof-press","Pallof press",'musculation',["Obliques", "Abdominaux"],["SmartWorkout"]],
+  ["rotation-de-buste-elastique","Rotation de buste élastique",'musculation',["Obliques", "Abdominaux"],["SmartWorkout"]],
+  ["pont-fessier-unilateral","Pont fessier unilatéral",'musculation',["Fessiers", "Ischio-jambiers"],["Poids du corps"]],
+  ["squat-vers-chaise","Squat vers chaise",'musculation',["Quadriceps", "Fessiers", "Abdominaux"],["Poids du corps"]],
+  ["extension-terminale-du-genou","Extension terminale du genou",'musculation',["Quadriceps"],["SmartWorkout"]],
+  ["wall-sit","Wall sit",'musculation',["Quadriceps", "Fessiers"],["Poids du corps"]],
+  ["souleve-de-terre-roumain","Soulevé de terre roumain",'musculation',["Ischio-jambiers", "Fessiers", "Lombaires"],["SmartWorkout"]],
+  ["leg-curl-debout-elastique","Leg curl debout élastique",'musculation',["Ischio-jambiers"],["SmartWorkout"]],
   ['marche-tapis','Marche sur tapis','cardio',['Cardio'],['Tapis Sole F63']],
   ['course-tapis','Course sur tapis','cardio',['Cardio'],['Tapis Sole F63']],
   ['velo-appartement','Vélo d’appartement','cardio',['Cardio'],['Vélo Merach S36L']],
