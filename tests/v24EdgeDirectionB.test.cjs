@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'..');
+const editor=fs.readFileSync(path.join(root,'src/WorkoutEditor.tsx'),'utf8');
+const css=fs.readFileSync(path.join(root,'src/v24-edge.css'),'utf8');
+assert.ok(editor.indexOf('lt-edge-general')<editor.indexOf('lt-edge-exercises'));
+assert.ok(editor.indexOf('lt-edge-exercises')<editor.indexOf('lt-edge-add'));
+assert.ok(editor.indexOf('lt-edge-add')<editor.indexOf('Rechercher un exercice'));
+assert.match(editor,/<details className="lt-premium-exercise">/);
+assert.doesNotMatch(editor,/<details className="lt-premium-exercise" open/);
+for(const label of ['01 — Organisation','02 — Performance','03 — Récupération','04 — Paramètres complémentaires','Plage min. (rép.)','Classification musculaire'])assert.ok(editor.includes(label),label);
+assert.match(css,/lt-edge-section/);
+console.log('PASS Direction B : sections, ordre, repli initial et conservation des paramètres');
