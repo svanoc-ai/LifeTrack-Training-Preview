@@ -1,0 +1,10 @@
+
+/* V16: locked isometric mode remains readable on iOS Safari/PWA. */
+.template-editor select.lt-isometric-locked:disabled {
+  color: #36d7c6 !important;
+  -webkit-text-fill-color: #36d7c6;
+  opacity: 1;
+  background-color: #24343c;
+  border-color: #36d7c6;
+  cursor: not-allowed;
+}
