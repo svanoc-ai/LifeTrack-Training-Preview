@@ -1,6 +1,7 @@
 import {APP_VERSION, BUILD_DATE} from './version';
 import StatsDashboard from './StatsDashboard';
 import Catalogue20Preview from './Catalogue20Preview';
+import LibraryIntegrityPanel from './LibraryIntegrityPanel';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './style.css';
@@ -816,6 +817,7 @@ function App() {
           {showLibrary && !showProfile && <section>
             <div className="section-head"><p className="kicker">RÉFÉRENTIEL · LOT 2-A.4</p><h1>Bibliothèque d’exercices</h1><p className="muted">{STANDARD_EXERCISES.length} standards · {customExercises.filter(e=>!e.archived).length} personnalisés actifs · {customExercises.filter(e=>e.archived).length} archivés.</p></div>
             <Catalogue20Preview/>
+            <LibraryIntegrityPanel db={storageStatus === 'ready' ? dbRef.current : null} exercises={allLibraryExercises}/>
             {libraryError && <p className="storage-error" role="alert">{libraryError}</p>}
             {libraryMessage && <p className="muted small" role="status">{libraryMessage}</p>}
             <button type="button" className="primary-button" disabled={storageStatus!=='ready'||exerciseBusy} onClick={()=>startExerciseEditor()}>Créer un exercice personnalisé <span>＋</span></button>

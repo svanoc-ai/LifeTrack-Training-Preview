@@ -56,3 +56,10 @@
 .lt20-review-summary>div{min-width:0;border:1px solid var(--line);border-radius:12px;padding:10px 4px;text-align:center;display:flex;flex-direction:column;gap:4px}
 .lt20-review-summary strong{font-size:clamp(19px,5vw,25px);color:var(--accent)}
 .lt20-review-summary span{font-size:11px;line-height:1.2;color:var(--muted)}
+
+/* V24.3 — Audit transversal, lecture seule */
+.lt-library-integrity-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
+.lt-library-integrity-metrics>div{display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(54,215,198,.06);border:1px solid rgba(135,166,181,.24);border-radius:12px;padding:12px 5px;min-width:0}
+.lt-library-integrity-metrics strong{font-size:1.55rem;color:#36D7C6}.lt-library-integrity-metrics span{text-align:center;font-size:.78rem;color:#adc2ce}
+.lt-library-integrity-issues{display:grid;gap:8px}.lt-library-integrity-issues>div{display:grid;gap:4px;padding:10px;border:1px solid rgba(135,166,181,.24);border-radius:10px;overflow-wrap:anywhere}.lt-library-integrity-issues span{font-size:.85rem;color:#adc2ce}
+@media(min-width:650px){.lt-library-integrity-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
