@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');const fs=require('node:fs');
+const component=fs.readFileSync('src/EditableSessionNumber.tsx','utf8');
+const session=fs.readFileSync('src/SessionExecution.tsx','utf8');
+assert.match(component,/setDraft\(e\.target\.value\)/);
+assert.match(component,/if\(raw===''\)/);
+assert.match(component,/onBlur=\{commit\}/);
+assert.match(session,/EditableSessionNumber key=\{`\$\{focusIndex\}-\$\{number\}-reps`\}/);
+assert.match(session,/EditableSessionNumber key=\{`\$\{focusIndex\}-\$\{number\}-load`\}/);
+assert.doesNotMatch(session,/Number\(e\.target\.value\)\|\|0/);
+console.log('PASS session number editing: blank draft, commit on blur, per-series state');
