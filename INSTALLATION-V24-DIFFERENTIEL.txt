@@ -1,0 +1,21 @@
+LifeTrack Training V24 candidate — différentiel depuis V23 + correctif TypeScript vert
+
+Copier les fichiers de cette archive dans le dépôt LifeTrack-Training-Preview en respectant les chemins (src/, public/, tests/). Remplacer les fichiers homonymes, ajouter les nouveaux. Ne pas effacer les autres fichiers du dépôt. Ne pas toucher à Production ni au workflow .github/workflows/deploy.yml.
+
+La compilation complète V24 n’a pas été vérifiée localement ; contrôler GitHub Actions avant recette iPhone.
+
+Fichiers modifiés/ajoutés :
+LIVRAISON-V24-CANDIDATE.md
+package.json
+public/sw.js
+src/SessionExecution.tsx
+src/StatsDashboard.tsx
+src/WorkoutEditor.tsx
+src/anatomy20.ts
+src/main.tsx
+src/trainingBlocks.ts
+src/v23-performance.css
+src/version.ts
+tests/anatomy20.test.cjs
+tests/v24StatsUI.test.cjs
+tests/v24TransitionRest.test.cjs
