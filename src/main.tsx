@@ -1,3 +1,4 @@
+import './v25-consolidation.css';
 import {APP_VERSION, BUILD_DATE} from './version';
 import StatsDashboard from './StatsDashboard';
 import Catalogue20Preview from './Catalogue20Preview';
