@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const {spawnSync}=require('node:child_process');
+const src=fs.readFileSync('src/Catalogue20Preview.tsx','utf8');
+assert.match(src,/statusLabels\[v13\?\.statut_v14/);
+assert.match(src,/Statut de validation/);
+assert.match(src,/statusByNumber\.get\(x\.numero\)\?\.statut_v14===status/);
+const a=spawnSync(process.execPath,['scripts/audit-anatomy-migration.cjs'],{encoding:'utf8'});
+assert.equal(a.status,0,a.stderr||a.stdout);
+const result=JSON.parse(a.stdout);
+assert.deepEqual(result.issues,[]);
+assert.equal(result.statuses.REVUE_REQUISE,45);
+assert.equal(result.statuses.SUSPENDU,7);
+assert.equal(result.statuses.EXCLU_DOUBLON,1);
+console.log('PASS revue catalogue : filtres statut V14 et politique de publication');

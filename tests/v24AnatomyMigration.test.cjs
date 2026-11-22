@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');
+const {spawnSync}=require('node:child_process');
+const result=spawnSync(process.execPath,['scripts/audit-anatomy-migration.cjs'],{encoding:'utf8'});
+assert.equal(result.status,0,result.stderr||result.stdout);
+const data=JSON.parse(result.stdout);
+assert.equal(data.total,66);
+assert.equal(data.standardExercises,69);
+assert.equal(data.statuses.REVUE_REQUISE,45);
+assert.equal(data.statuses.SUSPENDU,7);
+assert.equal(data.statuses.EXCLU_DOUBLON,1);
+assert.equal(data.active.length,13);
+assert.deepEqual(data.issues,[]);
+console.log('PASS décisions V14 et identifiants actifs');
