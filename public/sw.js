@@ -1,6 +1,6 @@
 
 /* LifeTrack Training — Lot 1-D. Cache isolé par nom et version. */
-const VERSION = '2-G.0.0';
+const VERSION = '2-G.0.1';
 const PREFIX = 'lifetrack-training-pwa-';
 const CACHE = PREFIX + VERSION;
 const ROOT = new URL('./', self.location.href).pathname;
@@ -17,7 +17,12 @@ self.addEventListener('install', event => {
       .map(match => new URL(match[1], self.location.origin).pathname)
       .filter(path => path.startsWith(ROOT));
     await cache.put(ROOT, response);
-    await cache.addAll([...new Set([...CORE.slice(1), ...assetPaths])]);
+    // Le cache d’un fichier facultatif manquant ne doit jamais bloquer une mise à jour.
+    await cache.addAll([...new Set(assetPaths)]);
+    await Promise.allSettled(CORE.slice(1).map(async path => {
+      const resource = await fetch(path, {cache: 'no-store'});
+      if (resource.ok) await cache.put(path, resource);
+    }));
   })());
 });
 
