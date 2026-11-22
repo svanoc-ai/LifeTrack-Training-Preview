@@ -1,0 +1,32 @@
+/* Direction B — sections indépendantes, sans modification des paramètres métier. */
+.template-editor{display:flex;flex-direction:column;gap:16px;min-width:0}
+.template-editor>.lt-edge-section{margin:0;background:var(--surface);border:0;border-radius:20px;padding:18px 14px;min-width:0}
+.template-editor>.lt-edge-section .lt-edge-section-title{margin:0 0 15px;font-size:clamp(17px,4.5vw,22px);font-weight:800;line-height:1.2;color:var(--text)}
+.lt-edge-general .lt-edge-section-title{font-size:13px!important;letter-spacing:.07em;color:var(--muted)!important}
+.lt-edge-general-fields{display:grid;gap:10px}.lt-edge-general-fields .field-label{margin:0;min-width:0}
+.lt-edge-exercises .lt-edge-count{font-size:13px;color:var(--accent);font-weight:700;margin-left:6px}
+.template-editor .lt-edge-exercises .target-card{padding:0;border:0;border-radius:15px;background:var(--bg);margin:9px 0;overflow:hidden}
+.template-editor .lt-edge-exercises .lt-premium-heading{padding:15px 38px 15px 14px!important;margin:0!important;border:0!important;gap:4px;min-height:74px}
+.lt-edge-exercises .lt-premium-heading>div{min-width:0;flex:1 1 100%;gap:3px}
+.lt-edge-exercises .lt-premium-heading .lt-premium-kicker{font-size:11px;letter-spacing:.06em}
+.lt-edge-exercises .lt-premium-heading strong{font-size:clamp(17px,4.7vw,22px);line-height:1.16;letter-spacing:-.02em}
+.lt-edge-exercises .lt-premium-heading .lt-premium-type{position:absolute;right:39px;top:12px;font-size:11px;padding:4px 8px;max-width:38%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lt-edge-exercises .lt-premium-heading .lt-premium-brief{font-size:12px;line-height:1.35;margin:3px 0 0}
+.lt-edge-exercises .lt-premium-heading .lt-premium-collapse-icon{top:22px;right:13px}
+.lt-edge-exercises .lt-premium-exercise[open]>.lt-premium-heading{border-bottom:1px solid var(--line)!important}
+.lt-edge-exercises .lt-premium-exercise[open]>.lt-premium-heading .lt-premium-type{position:static;max-width:none}
+.lt-edge-exercises .lt-premium-exercise[open]>.lt-premium-heading>div{flex:1 1 60%}
+.lt-edge-exercises .lt-premium-card{padding:0 14px 12px}
+.lt-edge-exercises .template-actions{padding:0 12px 12px}
+.lt-edge-add .lt-v20-exercise-picker{margin:0;padding:0;background:transparent;border:0;min-width:0}
+.lt-edge-add .lt-v20-exercise-picker .target-field{min-width:0}
+.lt-edge-add .template-add{min-width:0}
+.lt-edge-add .template-add select{min-width:0}
+@media(max-width:650px){
+ .panel:has(.template-editor){padding:12px 8px!important;overflow:visible}
+ .panel:has(.template-editor)>.panel-heading{padding:0 5px}
+ .template-editor{gap:12px}
+ .template-editor>.lt-edge-section{padding:15px 11px;border-radius:17px}
+ .template-editor>.lt-edge-exercises .target-card{margin:8px 0}
+ .lt-edge-exercises .lt-premium-heading .lt-premium-type{font-size:10px}
+}
