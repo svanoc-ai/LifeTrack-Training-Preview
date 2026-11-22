@@ -5,7 +5,7 @@ assert.match(stats,/GROUPS_20\.map\(group/);
 assert.match(stats,/anciennes données ne sont pas recalculées/);
 assert.match(stats,/view==='anatomie'&&<AnatomyPrototype/);
 const workouts=fs.readFileSync('src/WorkoutEditor.tsx','utf8');
-assert.match(workouts,/variantCount>1&&<button/);
+assert.match(workouts,/variantCount>1&&<>/);
 assert.match(workouts,/betweenExerciseRestSeconds\?\?120/);
 const version=fs.readFileSync('src/version.ts','utf8');
 const sw=fs.readFileSync('public/sw.js','utf8');
