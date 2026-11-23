@@ -1,0 +1,26 @@
+LIFETRACK TRAINING — V24.6 PREMIUM / 2-G.0.10
+
+ZIP DIFFÉRENTIEL À APPLIQUER SUR LA V24.5 (2-G.0.9) DÉJÀ DÉPLOYÉE.
+Ne pas importer ce ZIP comme dépôt complet et ne pas supprimer les fichiers existants.
+
+1. Dans le dépôt GitHub LifeTrack-Training-Preview, remplacer les fichiers contenus dans le ZIP en conservant les chemins src/, public/ et tests/.
+2. Ajouter les deux nouveaux fichiers src/v26-premium.css et src/exerciseDisplayName.ts, et le test tests/v26Premium.test.cjs.
+3. Conserver tous les autres fichiers et données. Faire un commit et vérifier GitHub Actions (build TypeScript + tests).
+4. Attendre le déploiement GitHub Pages, puis actualiser Safari/PWA et contrôler version 2-G.0.10 dans Plus → À propos.
+5. Exporter une sauvegarde JSON avant les tests de suppression ; tester sur programme archivé fictif et ANNULER la confirmation.
+
+ÉVOLUTIONS
+- Présentation immersive de la séance planifiée avec objectifs, démarrage 3-2-1-GO et retour sans modifier la séance.
+- Sélecteur statistique Premium : modes Période / Séance précise, recherche nom/date, liste récente paginée par 20, sélection conservée entre les vues.
+- Confirmation de suppression de programme personnalisée, avertissement rouge, nom, conséquences, annulation et garde-fous inchangés.
+- Harmonisation éditoriale des libellés identifiés sans toucher aux IDs ni aux données historiques.
+- Cache PWA versionné 2-G.0.10.
+
+VALIDATION LOCALE
+- npm test : OK, y compris test de non-régression V24.6.
+- Transpilation syntaxique TypeScript des 5 fichiers TSX modifiés : aucune erreur.
+- Compilation complète tsc/vite NON réalisée localement (dépendances npm non installées dans cet environnement). GitHub Actions doit être vert avant recette iPhone.
+
+HORS PÉRIMÈTRE
+- Mannequin LAB non remplacé ; nécessite intégration des actifs 3D validés.
+- Autres dialogues natifs de planification/cycles non modifiés ; cette version cible la suppression définitive d'un programme.
