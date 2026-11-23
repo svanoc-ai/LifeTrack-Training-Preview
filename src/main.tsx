@@ -1,3 +1,5 @@
+import {exerciseDisplayName} from './exerciseDisplayName';
+import './v26-premium.css';
 import './v25-consolidation.css';
 import {APP_VERSION, BUILD_DATE} from './version';
 import StatsDashboard from './StatsDashboard';
@@ -474,7 +476,7 @@ function App() {
   const [libraryEquipment, setLibraryEquipment] = useState('all');
   const [libraryOrigin, setLibraryOrigin] = useState('all');
   const [libraryArchived, setLibraryArchived] = useState(false);
-  const allLibraryExercises = [...STANDARD_EXERCISES, ...customExercises];
+  const allLibraryExercises = [...STANDARD_EXERCISES, ...customExercises].map(e=>({...e,name:exerciseDisplayName(e.name)}));
   const libraryMuscles = [...new Set(allLibraryExercises.flatMap(e => e.muscles))].sort((a,b)=>a.localeCompare(b,'fr'));
   const libraryEquipmentOptions = [...new Set(allLibraryExercises.flatMap(e => e.equipment))].sort((a,b)=>a.localeCompare(b,'fr'));
   const filteredLibrary = allLibraryExercises.filter(e =>
