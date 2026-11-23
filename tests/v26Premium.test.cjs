@@ -1,0 +1,7 @@
+const fs=require('node:fs');const assert=require('node:assert/strict');const read=n=>fs.readFileSync('src/'+n,'utf8');
+const program=read('ProgramEditor.tsx');assert.match(program,/lt-premium-modal-backdrop/);assert.match(program,/role="alertdialog"/);assert.match(program,/setDeleteCandidate\(p\)/);assert.match(program,/programId:null/);assert.match(program,/pending\.length/);assert.doesNotMatch(program,/window\.confirm\(`Supprimer définitivement/);
+const stats=read('StatsDashboard.tsx');assert.match(stats,/lt-v26-scope-switch/);assert.match(stats,/sessionQuery/);assert.match(stats,/sessionLimit/);assert.match(stats,/setSessionLimit\(n=>n\+20\)/);assert.match(stats,/scopedExecutions/);
+const session=read('SessionExecution.tsx');assert.match(session,/setPresentationOpen\(true\)/);assert.match(session,/lt-v26-preview-overlay/);assert.match(session,/aria-modal="true"/);assert.match(session,/chosenTemplate\.targets\.map/);assert.match(session,/plannedId:plan\?\.id\|\|null/);
+const names=read('exerciseDisplayName.ts');assert.match(names,/Développé debout/);assert.match(names,/Tirage horizontal/);assert.match(read('main.tsx'),/name:exerciseDisplayName\(e\.name\)/);
+assert.match(read('version.ts'),/2-G\.0\.10/);assert.match(fs.readFileSync('public/sw.js','utf8'),/2-G\.0\.10/);
+console.log('PASS V24.6 Premium: preflight immersive, searchable stats, safe modal, editorial names, version');
