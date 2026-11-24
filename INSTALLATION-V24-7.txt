@@ -1,0 +1,14 @@
+LIFETRACK TRAINING — V24.7 / 2-G.0.11
+ZIP DIFFÉRENTIEL À APPLIQUER SUR V24.6 (2-G.0.10)
+
+1. Dans LifeTrack Training Preview, exporter la sauvegarde JSON avant installation.
+2. Décompresser ce ZIP et copier les fichiers en conservant exactement les chemins src/, public/, tests/, package.json. Ne pas supprimer les autres fichiers du dépôt.
+3. Attendre GitHub Actions vert ; puis ouvrir https://svanoc-ai.github.io/LifeTrack-Training-Preview/ dans Safari et vérifier 2-G.0.11.
+4. Recette : Stats > Synthèse > Période : période, dates, actualisation regroupées dans un seul panneau ; Stats > Séance précise : aucun second pavé Période ; choisir une séance, vérifier Synthèse/Muscles/Progression/3D ; sélectionner une séance ancienne hors période précédente, vérifier ses chiffres ; revenir à Période.
+5. Prog > Programmes : vérifier l'accord singulier/pluriel de la confirmation de suppression sans confirmer.
+
+CONTENU : refonte STATS-01 du panneau d'analyse (sans changer les données), date de séance isolée indépendante de la période globale, formulation des confirmations de suppression, tests de non-régression, version/cache PWA.
+
+VALIDATION : tests Node existants et V24.7 réussis. Compilation TypeScript/Vite complète non exécutée localement : dépendances npm indisponibles hors ligne. GitHub Actions est indispensable.
+
+HORS PÉRIMÈTRE : mannequin anatomique LAB et refonte complète de Progression ; ces sujets restent prévus dans un prochain lot important.
