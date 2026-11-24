@@ -1,0 +1,7 @@
+VALIDATION V24.8 — BRANCHE SANS DEPLOIEMENT
+1. Créer une branche GitHub nommée validation/v24-8 depuis main (V24.7 stable).
+2. Dans cette branche seulement, importer le contenu de cette archive à la racine du dépôt, en conservant les autres fichiers.
+3. Onglet Actions : sélectionner « Validate LifeTrack Training V24.8 (no deployment) ».
+4. Vérifier les étapes Install dependencies, TypeScript validation, Automated regression tests et Production build.
+5. Ne PAS fusionner sur main et ne PAS déployer avant examen du résultat.
+IMPORTANT : Cette archive est une CANDIDATE DE VALIDATION, pas un ZIP approuvé pour production. Si la branche main a changé depuis l'archive source, ne pas appliquer aveuglément.
