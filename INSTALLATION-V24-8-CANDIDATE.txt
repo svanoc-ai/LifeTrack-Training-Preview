@@ -1,0 +1,10 @@
+LifeTrack Training V24.8 — CANDIDAT NON VALIDE POUR DEPLOIEMENT
+Version source : 2-G.0.13 ; base : V24.7 / 2-G.0.11.
+NE PAS INTEGRER AU DEPOT PREVIEW AVANT COMPILATION TYPECHECK/BUILD REUSSIE.
+Lots A-C : reprend les changements de la V24.8 partielle (statistiques, progression, anatomie).
+Lot D : suppression des planifications avec confirmation Premium ; harmonisation de la suppression d'historique.
+Lot E : présentation lisible des identifiants de variantes ; conserve les IDs et les noms stockés.
+Lot F : règles CSS d'adaptation iPhone pour les vues concernées.
+Limites : harmonisation de toutes les confirmations et des 70 libellés non vérifiée exhaustivement ; aucun essai réel Safari/PWA.
+Tests : npm test PASS ; npm run typecheck IMPOSSIBLE (node_modules incomplet : types React/Vite manquants).
+Aucune migration de données. Sauvegarder l'export JSON avant tout déploiement futur.

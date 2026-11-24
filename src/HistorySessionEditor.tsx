@@ -15,13 +15,13 @@ export default function HistorySessionEditor({session,exerciseNames,equipmentByI
  const remove=async()=>{setBusy(true);setError('');try{await onDelete(session.id);onClose()}catch(e){setError(String(e))}finally{setBusy(false)}};
  const sessionDate=new Date(session.endedAt||session.updatedAt||session.startedAt);
  const dateLabel=Number.isNaN(sessionDate.getTime())?'Date inconnue':new Intl.DateTimeFormat('fr-FR',{dateStyle:'full'}).format(sessionDate);
- if(mode==='delete')return <div className="lt-history-editor lt-history-delete" role="region" aria-label="Confirmer la suppression de la séance">
-  <h3>Supprimer cette séance ?</h3>
+ if(mode==='delete')return <div className="lt-history-editor lt-history-delete lt-v28-danger-panel" role="region" aria-label="Confirmer la suppression de la séance"><div className="lt-premium-modal-icon" aria-hidden="true">⚠</div>
+  <h3>Suppression définitive de la séance</h3>
   <p><strong>{session.name?.trim()||'Séance d’entraînement'}</strong></p>
   <p className="muted">{dateLabel}</p>
-  <p role="alert">Cette suppression est irréversible et retire cette séance des statistiques et des recommandations.</p>
+  <p className="lt-premium-modal-danger" role="alert">⚠ Cette suppression est irréversible. Elle retire cette séance des statistiques et des recommandations.</p>
   {error&&<p role="alert">{error}</p>}
-  <div className="lt-history-editor-actions"><button type="button" className="lt-delete-confirm" disabled={busy} onClick={()=>void remove()}>{busy?'Suppression…':'Confirmer définitivement la suppression'}</button><button type="button" className="secondary-button" disabled={busy} onClick={onClose}>Conserver la séance</button></div>
+  <div className="lt-history-editor-actions"><button type="button" className="lt-premium-delete-button" disabled={busy} onClick={()=>void remove()}>{busy?'Suppression…':'Confirmer définitivement la suppression'}</button><button type="button" className="secondary-button" disabled={busy} onClick={onClose}>Conserver la séance</button></div>
  </div>;
  return <div className="lt-history-editor" role="region" aria-label="Modifier la séance enregistrée">
   <h3>Modifier la séance</h3><p className="muted small">Les corrections remplacent les valeurs enregistrées. Les objectifs de la séance type restent inchangés.</p>
