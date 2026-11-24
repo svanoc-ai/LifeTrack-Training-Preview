@@ -1,3 +1,4 @@
+import './v28-premium.css';
 import './v27-stats.css';
 import {exerciseDisplayName} from './exerciseDisplayName';
 import './v26-premium.css';

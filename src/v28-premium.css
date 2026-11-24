@@ -1,0 +1,39 @@
+/* V24.8: presentation only; preserves all stored records and calculations. */
+.lt-v28-progression-advice{border:1px solid #36d7c6!important;background:linear-gradient(145deg,rgba(54,215,198,.15),rgba(9,27,42,.18))!important;box-shadow:inset 3px 0 0 #36d7c6}
+.lt-v28-progression-advice h2{color:#36d7c6!important}
+.lt-v28-anatomy-help{display:flex;justify-content:flex-end;margin:4px 0 6px}
+.lt-v28-info-button{background:transparent;border:1px solid rgba(54,215,198,.4);border-radius:999px;color:#36d7c6;padding:6px 12px;font-size:.8rem;cursor:pointer}
+.lt-v28-anatomy-disclosure{border:1px solid #355264;border-radius:14px;padding:12px 16px;margin:8px 0 12px;background:#102637}
+.lt-v28-anatomy-disclosure p{margin:6px 0 10px}
+.lt-v28-muscle-picker{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:12px;align-items:center;margin:16px 0 12px}
+.lt-v28-muscle-picker .field-label{margin:0}.lt-v28-muscle-picker select{min-width:0;margin:0}
+.lt-v28-muscle-summary{border:1px solid #355264;border-radius:16px;padding:16px;background:rgba(14,40,55,.6)}
+.lt-v28-muscle-summary>div:first-child{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.lt-v28-muscle-summary>div:first-child span{color:#36d7c6;font-weight:750}
+.lt-v28-muscle-summary>small{display:block;color:#aac0cb;margin-top:7px}
+.lt-v28-muscle-detail{margin-top:12px;border-top:1px solid #355264;padding-top:12px}
+.lt-v28-muscle-detail summary{cursor:pointer;color:#36d7c6;font-weight:650}
+.lt-v28-muscle-detail .lt-muscle-anatomy{margin-top:10px}
+.lt-v28-muscle-empty{color:#aac0cb;font-size:.9rem;margin:12px 0}
+@media(max-width:420px){.lt-v28-muscle-picker{grid-template-columns:1fr;gap:5px}.lt-v28-muscle-summary{padding:12px}}
+
+/* Lot D: unified destructive confirmation for plans and history. */
+.lt-v28-danger-panel{border:1px solid rgba(239,87,99,.48)!important;background:linear-gradient(150deg,#142739,#201e2c)!important;border-radius:18px;padding:18px;max-width:100%;overflow-wrap:anywhere}
+.lt-v28-danger-panel h3{color:#ff7581;margin:6px 0 12px}
+.lt-v28-danger-panel .lt-premium-modal-danger{color:#ff8790;font-weight:700}
+.lt-v28-danger-panel .lt-history-editor-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.lt-v28-danger-panel .lt-history-editor-actions button{min-width:0;white-space:normal}
+/* Lot F: prevent iPhone horizontal clipping while retaining accessible controls. */
+.lt-stats-dashboard,.lt-calendar,.lt-v28-muscle-summary,.lt-progression-history-card,.lt-v26-session-browser{min-width:0;max-width:100%;box-sizing:border-box}
+.lt-v26-session-browser input,.lt-v27-period select,.lt-v28-muscle-picker select{width:100%;max-width:100%;box-sizing:border-box}
+.lt-v28-muscle-summary,.lt-v28-anatomy-disclosure{overflow-wrap:anywhere}
+@media(max-width:480px){.lt-v28-danger-panel .lt-history-editor-actions{flex-direction:column}.lt-v28-danger-panel .lt-history-editor-actions button{width:100%}.lt-v26-session-results button{min-width:0;max-width:100%}.lt-premium-modal{width:calc(100vw - 32px);max-width:100%;box-sizing:border-box}}
+
+/* V24.8 — confirmation d'abandon non destructive, homogène avec les actions sensibles. */
+.lt-v28-danger-overlay{position:fixed;inset:0;z-index:10050;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(3,10,22,.82)}
+.lt-v28-danger-modal{width:min(100%,440px);max-height:calc(100dvh - 32px);overflow:auto;background:#111e32;border:1px solid rgba(244,97,110,.45);border-radius:18px;padding:22px;color:#f2f6fc;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+.lt-v28-danger-icon{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:2px solid #f16b70;border-radius:50%;color:#f16b70;font-weight:800;margin-bottom:10px}
+.lt-v28-danger-modal h3{color:#ff858c;margin:0 0 12px}.lt-v28-danger-modal p{line-height:1.5;margin:0 0 20px}
+.lt-v28-danger-actions{display:flex;flex-wrap:wrap;gap:10px}.lt-v28-danger-actions button{flex:1 1 150px;min-height:44px}
+.lt-v28-danger-button{border:1px solid #f16b70;border-radius:10px;background:#ae3344;color:white;font-weight:700;padding:10px 14px}
+.lt-v28-danger-button:disabled{opacity:.5}
