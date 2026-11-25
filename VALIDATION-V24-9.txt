@@ -1,0 +1,6 @@
+LifeTrack Training V24.9 - 2-G.0.14
+Base requise : V24.8 (2-G.0.13).
+Archive differentielle, conserver tous les autres fichiers du depot.
+Tests npm test : OK localement.
+Compilation TypeScript / build production : a confirmer via GitHub Actions.
+Ne pas deployer sur main avant validation GitHub.
