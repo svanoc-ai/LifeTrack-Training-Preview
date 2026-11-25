@@ -8,7 +8,7 @@ export type Recommendation={kind:'increase-resistance'|'increase-repetitions'|'i
 const finite=(n:unknown):n is number=>typeof n==='number'&&Number.isFinite(n);
 const same=(a:unknown,b:unknown)=>a===b;
 function config(t:Target){return t.muscleSnapshot?.variantId??t.variantId??null;}
-function getValidated(sets:SetResult[],planned:number){return Array.from({length:planned},(_,i)=>sets.find(s=>s.set===i+1&&s.validated===true)).filter((s):s is SetResult=>s!==undefined);}
+function getValidated(sets:SetResult[],planned:number){return Array.from({length:planned},(_,i)=>sets.find(s=>s.set===i+1&&s.validated!==false)).filter((s):s is SetResult=>s!==undefined);}
 export function progressionRecords(history:Execution[],exerciseId?:string):ProgressionRecord[]{
  const records:ProgressionRecord[]=[];
  for(const session of history){

@@ -44,3 +44,18 @@
 .lt-v29-info-icon:focus-visible{outline:2px solid #36d7c6;outline-offset:3px}
 .lt-anatomy-prototype .lt-anatomy-controls{margin-top:6px;margin-bottom:6px}
 .lt-anatomy-prototype .lt-v28-muscle-picker{margin-top:10px}
+
+/* Bilan : correction compacte des performances (V25) */
+.lt-review-exercises{margin:16px 0}.lt-review-exercises-toggle{width:100%;text-align:left}.lt-review-exercise-list{display:grid;gap:8px;margin-top:10px}.lt-review-exercise-card{border:1px solid rgba(54,215,198,.22);border-radius:12px;background:rgba(7,26,42,.6);overflow:hidden}.lt-review-exercise-heading{width:100%;border:0;background:transparent;color:inherit;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;text-align:left}.lt-review-exercise-heading strong{min-width:0;overflow-wrap:anywhere}.lt-review-exercise-heading span{font-size:12px;color:#8bded6;white-space:normal;text-align:right;flex-shrink:0;max-width:42%}.lt-review-series-row input{min-width:0;max-width:100%;box-sizing:border-box}.lt-review-exercise-list{min-width:0}.lt-review-series{padding:0 12px 12px;display:grid;gap:10px}.lt-review-series-row{border-top:1px solid rgba(255,255,255,.1);padding-top:10px;display:grid;gap:8px}.lt-review-series-row label{display:grid;gap:5px;font-size:12px}.lt-review-series-check,.lt-review-exercise-check{display:flex!important;align-items:center;gap:8px}.lt-review-series-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.lt-review-series-fields input{min-width:0;width:100%}.lt-review-exercise-check{padding-top:5px;color:#8bded6;font-size:12px}
+
+/* Fenêtre contextuelle du modèle anatomique : le bouton ⓘ conserve ses dimensions. */
+.lt-anatomy-help-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(2,12,22,.7);display:flex;align-items:center;justify-content:center;padding:16px}
+.lt-anatomy-help-dialog{position:relative;width:min(100%,420px);max-height:80dvh;overflow-y:auto;margin:0;box-shadow:0 16px 50px rgba(0,0,0,.5);padding:20px 18px 14px}
+.lt-anatomy-help-close{position:absolute;right:10px;top:8px;border:0;background:transparent;color:#36d7c6;font-size:25px;line-height:1;cursor:pointer;padding:4px 8px}
+.lt-anatomy-help-dialog p:first-of-type{padding-right:22px}
+
+.lt-review-live-summary{display:grid;gap:4px;margin:10px 0;padding:10px 12px;border:1px solid rgba(54,215,198,.28);border-radius:10px;background:rgba(54,215,198,.07);font-size:12px}.lt-review-live-summary strong{color:#36d7c6}.lt-review-live-summary span{overflow-wrap:anywhere}
+
+/* Bilan corrigé : différencier les séries exclues des statistiques. */
+.lt-review-series-row-inactive{opacity:.58;border-left:2px solid rgba(255,255,255,.25);padding-left:8px}
+.lt-review-empty-warning{color:#f5c27b;font-weight:600}
