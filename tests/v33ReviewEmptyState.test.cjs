@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const ui=fs.readFileSync('src/SessionExecution.tsx','utf8');
+const css=fs.readFileSync('src/v28-premium.css','utf8');
+assert.match(ui,/lt-review-series-row-inactive/);
+assert.match(ui,/reviewSummary\.sets===0&&/);
+assert.match(ui,/la séance sera enregistrée comme partielle/);
+assert.match(css,/\.lt-review-series-row-inactive/);
+assert.match(css,/\.lt-review-empty-warning/);
+console.log('PASS V33 review: excluded sets and empty workout warning');

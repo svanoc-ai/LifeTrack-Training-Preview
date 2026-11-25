@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const css=fs.readFileSync('src/v28-premium.css','utf8');
+const ui=fs.readFileSync('src/SessionExecution.tsx','utf8');
+assert.match(css,/\.lt-review-exercise-heading strong\{[^}]*overflow-wrap:anywhere/);
+assert.match(css,/\.lt-review-exercise-heading span\{[^}]*white-space:normal/);
+assert.match(css,/\.lt-review-series-row input\{[^}]*max-width:100%/);
+assert.match(ui,/setReviewExerciseOpen\(false\)/);
+assert.match(ui,/setReviewExpandedIndex\(null\)/);
+console.log('PASS V32 review mobile: long names, wrapping, narrow inputs, collapsed by default');

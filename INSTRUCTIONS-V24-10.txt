@@ -1,0 +1,17 @@
+LIFETRACK TRAINING V24.10 — 2-G.0.15 — DIFFÉRENTIEL DE VALIDATION
+
+Base requise : LifeTrack Training Preview main 2-G.0.14.
+Copier les fichiers du ZIP en conservant leurs chemins relatifs à la racine du dépôt.
+Ne pas effacer les autres fichiers du dépôt.
+
+Branche conseillée : validation/v24-10
+Workflow ajouté : .github/workflows/validate-v24-10.yml
+Ce workflow exécute npm install, npm run typecheck, npm test et npm run build.
+Ne fusionner dans main qu'après validation verte.
+
+Périmètre : bilan de fin de séance modifiable (séries, durées chronométrées, décochage),
+recalcul des totaux, cohérence progression, fenêtre d'aide anatomique et libellés français.
+
+Vérifications locales : npm test OK, check-version OK.
+TypeScript et build de production NON validés localement : à vérifier sur GitHub.
+La Preview déployée reste inchangée avant fusion.
