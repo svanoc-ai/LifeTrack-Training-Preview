@@ -8,7 +8,7 @@ assert.match(stats,/summary20FromSnapshots\(scopedExecutions,analysisPeriod.star
 assert.match(stats,/period=\{analysisPeriod\}/);
 assert.match(stats,/setSessionLimit\(n=>n\+20\)/);
 const program=fs.readFileSync('src/ProgramEditor.tsx','utf8');
-assert.match(program,/Aucune séance historique n’est associée/);
+assert.match(program,/Aucune séance associée/);
 assert.match(program,/restera conservée/);
-const version=fs.readFileSync('src/version.ts','utf8');assert.match(version,/2-G\.0\.1[123]/);
+const version=fs.readFileSync('src/version.ts','utf8');assert.match(version,/2-G\.0\.1[1234]/);
 console.log('PASS V24.7: single adaptive scope panel, isolated session date, premium pluralization');

@@ -1,0 +1,17 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const read = p => fs.readFileSync(p, 'utf8');
+const stats = read('src/StatsDashboard.tsx');
+const progression = read('src/StatsProgression.tsx');
+const programs = read('src/ProgramEditor.tsx');
+const anatomy = read('src/AnatomyPrototype.tsx');
+assert.match(stats, /selectedSession\?'—':fmt\(stats\.sessionsPerWeek\)/, 'Session frequency must be non-applicable');
+assert.match(stats, /selectedSession\?'Non applicable à une séance'/, 'Session-only labels must explain unavailable metrics');
+assert.match(progression, /const maxPoints=32/, 'Progression charts must cap point count');
+assert.match(progression, /const low=group\.reduce/, 'Downsampling must preserve troughs');
+assert.match(progression, /const high=group\.reduce/, 'Downsampling must preserve peaks');
+assert.match(progression, /variantDisplayName\(r\.variantId\)/, 'Technical variant IDs must not be shown directly');
+assert.match(programs, /Suppression actuellement impossible/, 'Program deletion must explain blocked plans');
+assert.match(programs, /disabled=\{busy\|\|plans\.some/, 'Program deletion must disable destructive action when plans remain');
+assert.match(anatomy, /À propos du modèle/, '3D model credits must remain accessible');
+console.log('PASS V24.9 consolidation static regression checks');

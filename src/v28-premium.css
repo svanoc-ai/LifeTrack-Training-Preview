@@ -37,3 +37,10 @@
 .lt-v28-danger-actions{display:flex;flex-wrap:wrap;gap:10px}.lt-v28-danger-actions button{flex:1 1 150px;min-height:44px}
 .lt-v28-danger-button{border:1px solid #f16b70;border-radius:10px;background:#ae3344;color:white;font-weight:700;padding:10px 14px}
 .lt-v28-danger-button:disabled{opacity:.5}
+
+/* V24.9 — compact anatomical model information control. */
+.lt-v29-anatomy-stage-tools{display:flex;justify-content:flex-end;margin:0 0 4px;min-height:28px}
+.lt-v29-info-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid rgba(54,215,198,.48);border-radius:50%;background:rgba(12,35,49,.8);color:#36d7c6;font-size:17px;line-height:1;cursor:pointer;padding:0}
+.lt-v29-info-icon:focus-visible{outline:2px solid #36d7c6;outline-offset:3px}
+.lt-anatomy-prototype .lt-anatomy-controls{margin-top:6px;margin-bottom:6px}
+.lt-anatomy-prototype .lt-v28-muscle-picker{margin-top:10px}
