@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const session=fs.readFileSync('src/SessionExecution.tsx','utf8');
+const stats=fs.readFileSync('src/statsEngine.ts','utf8');
+const progression=fs.readFileSync('src/progressionAnalysis.ts','utf8');
+const muscles=fs.readFileSync('src/muscleStats.ts','utf8');
+assert.match(session,/reviewResults\.filter\(r=>r\.sets\.some\(v=>v\.validated!==false\)\)\.length/, 'Review exercise counter must use corrected validation flags');
+assert.match(session,/exerciseResults:correctedResults,completedIndexes:correctedIndexes/, 'Save corrected series and completion together');
+assert.match(session,/setReviewResults\(\(s\.exerciseResults\?\?\[\]\)\.map/, 'Review edits must use a draft');
+assert.match(session,/durationSeconds:Math\.max\(0,Math\.min\(MAX_TARGET_SECONDS/, 'Timed series are editable');
+assert.match(stats,/\.filter\(validated\)/, 'Statistics must exclude invalidated series');
+assert.match(progression,/s\.validated!==false/, 'Progression must exclude invalidated series');
+assert.match(muscles,/\.filter\(s=>s\.validated!==false\)/, 'Anatomy must exclude invalidated series');
+console.log('PASS review draft and cross-module validation consistency');
