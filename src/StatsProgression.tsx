@@ -13,7 +13,23 @@ function graph(rows:ProgressionRecord[],metric:'load'|'reps'|'duration'){
  const data=rows.map((r,i)=>({r,i,value:get(r)})).filter((p):p is typeof p&{value:number}=>p.value!==null&&Number.isFinite(p.value));
  if(!data.length)return <p className="muted small">Aucune mesure disponible pour cet indicateur.</p>;
  const maxPoints=32;
- const sampled=data.length<=maxPoints?data:data.filter((_,i)=>i===0||i===data.length-1||i%Math.ceil(data.length/(maxPoints-2))===0);
+ // Keep endpoints and local extrema when condensing long histories, so short-lived
+ // performance peaks and dips are not silently lost in the preview.
+ const sampled=data.length<=maxPoints?data:(()=>{
+  const buckets=Math.floor((maxPoints-2)/2);
+  const selected=[data[0]];
+  for(let b=0;b<buckets;b++){
+   const start=1+Math.floor(b*(data.length-2)/buckets);
+   const end=1+Math.floor((b+1)*(data.length-2)/buckets);
+   const group=data.slice(start,Math.max(start+1,end));
+   if(!group.length)continue;
+   const low=group.reduce((a,p)=>p.value<a.value?p:a);
+   const high=group.reduce((a,p)=>p.value>a.value?p:a);
+   selected.push(...(low.i===high.i?[low]:[low,high].sort((a,b)=>a.i-b.i)));
+  }
+  selected.push(data[data.length-1]);
+  return selected;
+ })();
  const values=data.map(p=>p.value),lo=Math.min(...values),hi=Math.max(...values),span=Math.max(1,hi-lo),w=320,h=150;
  const x=(i:number)=>30+(rows.length===1?130:i*270/(rows.length-1));
  const y=(v:number)=>h-25-(v-lo)/span*105;
@@ -34,7 +50,7 @@ export default function StatsProgression({executions,period,exerciseNames={}}:{e
  const recommendation=last?suggestProgression(last):null;
  return <div className="lt-stats-progression">
  <div className="panel"><h2>Progression des performances</h2><p className="muted small">Séries validées uniquement. Les résistances élastiques sont nominales et ne représentent pas une force mesurée.</p>
- {!ids.length?<p>Aucune performance de musculation enregistrée sur cette période.</p>:<><label className="field-label" htmlFor="lt-prog-exercise">Exercice</label><select className="profile-input" id="lt-prog-exercise" value={chosen} onChange={e=>{setExercise(e.target.value);setVisibleCount(10);setExpanded([])}}>{ids.map(id=><option key={id} value={id}>{exerciseDisplayName(exerciseNames[id]??(id.startsWith('custom:')?'Exercice personnalisé (nom indisponible)':id.replace(/^std:/,'').replaceAll('-',' ')))}</option>)}</select><label className="field-label" htmlFor="lt-prog-metric">Indicateur</label><select className="profile-input" id="lt-prog-metric" value={selectedMetric} onChange={e=>setMetric(e.target.value as typeof metric)}>{(!durationMode||hasTimedReps)&&<option value="reps">Répétitions minimales</option>}<option value="load">Résistance nominale (kg)</option>{(durationMode||hasTimedReps)&&<option value="duration">Durée minimale (secondes)</option>}</select>{graph(rows,selectedMetric)}{rows.length>32&&<p className="muted small">{rows.length} performances · aperçu allégé à {Math.min(rows.length,34)} points pour préserver la lisibilité. Toutes les mesures restent disponibles dans l’historique.</p>}</>}
+ {!ids.length?<p>Aucune performance de musculation enregistrée sur cette période.</p>:<><label className="field-label" htmlFor="lt-prog-exercise">Exercice</label><select className="profile-input" id="lt-prog-exercise" value={chosen} onChange={e=>{setExercise(e.target.value);setVisibleCount(10);setExpanded([])}}>{ids.map(id=><option key={id} value={id}>{exerciseDisplayName(exerciseNames[id]??(id.startsWith('custom:')?'Exercice personnalisé (nom indisponible)':id.replace(/^std:/,'').replaceAll('-',' ')))}</option>)}</select><label className="field-label" htmlFor="lt-prog-metric">Indicateur</label><select className="profile-input" id="lt-prog-metric" value={selectedMetric} onChange={e=>setMetric(e.target.value as typeof metric)}>{(!durationMode||hasTimedReps)&&<option value="reps">Répétitions minimales</option>}<option value="load">Résistance nominale (kg)</option>{(durationMode||hasTimedReps)&&<option value="duration">Durée minimale (secondes)</option>}</select>{graph(rows,selectedMetric)}{rows.length>32&&<p className="muted small">{rows.length} performances · aperçu allégé à {Math.min(rows.length,32)} points pour préserver la lisibilité. Toutes les mesures restent disponibles dans l’historique.</p>}</>}
  </div>
  {last&&<div className="panel"><h2>Dernière performance</h2><div className="lt-stats-facts"><div>Date <strong>{label(last.date)}</strong></div><div>Séries validées <strong>{last.validatedSets} / {last.plannedSets}</strong></div><div>Résistance nominale <strong>{num(last.loadKg,' kg')}</strong></div>{last.minimumReps!==null&&last.minimumReps>0&&<div>Répétitions minimales <strong>{num(last.minimumReps)}</strong></div>}{last.minimumDurationSeconds!==null&&<div>Durée minimale <strong>{num(last.minimumDurationSeconds,' s')}</strong></div>}<div>RIR minimal <strong>{num(last.rirMinimum)}</strong></div><div>Qualité <strong>{last.quality??'Non renseignée'}</strong></div><div>Statut <strong>{last.status==='partial'?'Partielle':'Terminée'}</strong></div></div>{comparison?<p className="muted small">Comparabilité avec la précédente : <strong>{names[comparison.reliability]}</strong>{comparison.reasons.length?` — ${comparison.reasons.join(' ; ')}`:''}</p>:<p className="muted small">Aucune séance précédente sur la période.</p>}</div>}
  {recommendation&&<div className="panel lt-v28-progression-advice" role="status"><h2>Suggestion de progression</h2><p>{recommendation.message}</p><p className="muted small">Suggestion informative uniquement : aucun changement automatique des objectifs ou des charges. Validation manuelle nécessaire.</p></div>}
