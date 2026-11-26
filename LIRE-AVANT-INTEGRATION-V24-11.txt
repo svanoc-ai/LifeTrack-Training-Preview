@@ -1,0 +1,12 @@
+LIFETRACK TRAINING — V24.11 / 2-G.0.16
+ZIP DIFFERENTIEL DE VALIDATION (13 fichiers)
+
+Base : LifeTrack-Training-Preview-main 5.zip (V24.10).
+Intégration : sur une branche de validation issue de main, remplacer/ajouter les fichiers de ce ZIP en respectant les chemins. Ne pas supprimer les autres fichiers.
+
+Périmètre : saisies numériques, bilan corrigé, historique, statut partiel, éditeur compact, contrôle Anatomie 3D.
+
+Vérifications locales : npm test OK, synchronisation version/cache OK.
+Limitation : npm run typecheck non validé localement (dépendances React/Vite/Node absentes) ; build non validé localement.
+
+Sur GitHub : vérifier le workflow de validation (typecheck/build/tests), puis fusionner seulement si vert ; ensuite recette iPhone ciblée.
