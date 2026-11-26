@@ -578,3 +578,25 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .lt20-result{padding:13px 0;border-bottom:1px solid rgba(130,150,170,.24);overflow-wrap:anywhere}
 .lt20-result p{margin:5px 0}
 .lt20-result small{opacity:.75}
+
+/* V24.11 — résumé lisible sur mobile */
+.lt-review-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+.lt-review-metrics>span{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lt-review-metrics b{font-size:1.15rem;font-variant-numeric:tabular-nums}
+.lt-review-metrics small{font-size:.72rem;line-height:1.25;color:#a8bdc7}
+@media(max-width:390px){.lt-review-metrics{gap:5px}.lt-review-metrics b{font-size:1rem}}
+
+/* V24.11 — historique : édition compacte, progressive, adaptée à l'iPhone */
+.lt-history-editor-exercise{border:1px solid #345265;border-radius:12px;margin:12px 0;overflow:hidden}
+.lt-history-editor-exercise>summary,.lt-history-editor-set>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;cursor:pointer;list-style:none}
+.lt-history-editor-exercise>summary::-webkit-details-marker,.lt-history-editor-set>summary::-webkit-details-marker{display:none}
+.lt-history-editor-exercise>summary strong{color:#36d7c6;min-width:0;overflow-wrap:anywhere}
+.lt-history-editor-exercise>summary span,.lt-history-editor-set>summary span{color:#adc0cb;font-size:.8rem;text-align:right;flex-shrink:0}
+.lt-history-editor-series{padding:0 10px 10px}
+.lt-history-editor-set{display:block;padding:0;margin:8px 0;border:1px solid #345265;border-radius:10px}
+.lt-history-editor-set>summary{padding:10px}
+.lt-history-editor-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 10px 10px}
+.lt-history-editor-fields label{min-width:0;font-size:.8rem;overflow-wrap:anywhere}
+.lt-history-editor-fields .profile-input{width:100%;min-width:0;padding:9px 7px;font-size:1rem}
+.lt-history-editor-fields .lt-history-editor-check{grid-column:1/-1;display:flex;align-items:center;gap:8px}
+@media(max-width:370px){.lt-history-editor-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}

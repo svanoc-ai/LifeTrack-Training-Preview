@@ -22,5 +22,5 @@ const allUnchecked=stats([{index:0,sets:sets.map(s=>({...s,validated:false}))},{
 assert.equal(allUnchecked.strengthSets,0);assert.equal(allUnchecked.isometricSeconds,0);assert.equal(allUnchecked.nominalVolumeKgReps,0);
 const session=fs.readFileSync('src/SessionExecution.tsx','utf8');
 assert.match(session,/completedIndexes:correctedIndexes/,'Corrected completion must be saved');
-assert.match(session,/status=abandon\?'abandoned':correctedIndexes\.length===session\.targets\.length\?'completed':'partial'/,'Partial status after unchecking exercises');
+assert.match(session,/status=abandon\?'abandoned':correctedIndexes\.length===session\.targets\.length&&base\.targets\.every/,'Partial status after unchecking exercises');
 console.log('PASS V31 review edge cases: isometric edits, unchecked series, volume, rest, partial session');

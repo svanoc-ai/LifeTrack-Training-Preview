@@ -7,7 +7,7 @@ const muscles=fs.readFileSync('src/muscleStats.ts','utf8');
 assert.match(session,/reviewResults\.filter\(r=>r\.sets\.some\(v=>v\.validated!==false\)\)\.length/, 'Review exercise counter must use corrected validation flags');
 assert.match(session,/exerciseResults:correctedResults,completedIndexes:correctedIndexes/, 'Save corrected series and completion together');
 assert.match(session,/setReviewResults\(\(s\.exerciseResults\?\?\[\]\)\.map/, 'Review edits must use a draft');
-assert.match(session,/durationSeconds:Math\.max\(0,Math\.min\(MAX_TARGET_SECONDS/, 'Timed series are editable');
+assert.match(session,/patchReviewNumber\(i,v\.set,'durationSeconds',e\.target\.value,MAX_TARGET_SECONDS,true\)/, 'Timed series are editable');
 assert.match(stats,/\.filter\(validated\)/, 'Statistics must exclude invalidated series');
 assert.match(progression,/s\.validated!==false/, 'Progression must exclude invalidated series');
 assert.match(muscles,/\.filter\(s=>s\.validated!==false\)/, 'Anatomy must exclude invalidated series');

@@ -38,7 +38,9 @@ export function calculateStats(executions:readonly Execution[],planned:readonly 
  for(const s of executions){
   if(s.status!=='completed'&&s.status!=='partial')continue;
   const day=localDay(s.endedAt||s.updatedAt||s.startedAt);if(!day||day<period.start||day>period.end||!workPresent(s))continue;
-  sessions++;if(s.status==='partial')partialSessions++;else completeSessions++;
+  // A completed execution with explicitly unchecked sets is partial even if an older save kept status='completed'.
+  const hasUncheckedSets=s.exerciseResults?.some(r=>r.sets.some(set=>set.validated===false))??false;
+  sessions++;if(s.status==='partial'||hasUncheckedSets)partialSessions++;else completeSessions++;
   if(s.plannedId)fulfilled.add(s.plannedId);
   const week=monday(day);weekCounts.set(week,(weekCounts.get(week)||0)+1);
   if(finiteNonnegative(s.activeMs)&&finiteNonnegative(s.pauseMs)){
