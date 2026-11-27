@@ -4,9 +4,9 @@ import { test, expect } from '@playwright/test';
 // They use fabricated completed sessions, never the user's IndexedDB or production URL.
 type Scenario = { count:number; target:number; actual:number[]; rir:number[]; load?:number; goalRir?:number };
 async function recommendation(page: import('@playwright/test').Page, scenarios:Scenario[]) {
-  await page.goto('/');
+  await page.goto('./');
   return page.evaluate(async (scenarios) => {
-    const {recommendProgression} = await import('/src/recommendations.ts');
+    const {recommendProgression} = await import(new URL('src/recommendations.ts', document.baseURI).href);
     const history = scenarios.map((s,i) => {
       const time = new Date(Date.UTC(2026,10,1+i)).toISOString();
       return {
@@ -64,21 +64,23 @@ test('AUTO-09 : RIR insuffisant bloque le palier suivant',async ({page})=>{
 });
 
 test('AUTO-10 : le champ de repos accepte la saisie sans zéro initial',async ({page})=>{
-  await page.goto('/');
-  await page.locator('.bottom-nav').getByRole('button',{name:'Prog',exact:true}).click();
+  await page.goto('./');
+  await page.getByRole('navigation',{name:'Navigation mobile'}).getByRole('button',{name:'Prog',exact:true}).click();
   const templates=page.locator('.panel').filter({has:page.getByRole('heading',{name:'Séances types',exact:true})});
-  await templates.getByRole('button',{name:/Créer/}).click();
-  const picker=templates.getByRole('combobox',{name:'Exercice à ajouter'});
-  const choices=await picker.locator('option').evaluateAll(options=>options.map(o=>({value:(o as HTMLOptionElement).value,text:o.textContent||''})).filter(o=>o.value));
-  expect(choices.length).toBeGreaterThan(0);
-  await picker.selectOption(choices[0].value);
-  await templates.getByRole('button',{name:'Ajouter',exact:true}).click();
-  await picker.selectOption(choices[0].value);
-  await templates.getByRole('button',{name:'Ajouter',exact:true}).click();
-  const blocks=templates.getByLabel('Organisation');
-  await blocks.nth(0).selectOption('A');
-  await blocks.nth(1).selectOption('A');
-  const rest=templates.getByLabel('Repos entre exercices (s)').first();
+  await templates.getByRole('button',{name:'+ Créer',exact:true}).click();
+  const addExercise = templates.getByRole('region', { name: 'Ajouter un exercice' });
+  await addExercise.getByLabel('Catégorie').selectOption('musculation');
+  const picker = addExercise.getByRole('combobox', { name: 'Exercice à ajouter' });
+  const exercise = await picker.locator('option[value]:not([value=""])').first().getAttribute('value');
+  expect(exercise).toBeTruthy();
+  for (const index of [0, 1]) {
+    await picker.selectOption(exercise!);
+    await addExercise.getByRole('button', { name: 'Ajouter', exact: true }).click();
+    const card = templates.locator('.target-card').nth(index);
+    await card.locator('summary').first().click();
+    await card.getByRole('combobox', { name: 'Type d’enchaînement' }).selectOption('A');
+  }
+  const rest = templates.locator('.target-card').first().getByLabel('Repos entre exercices du bloc (s)');
   await rest.fill('15');
   await expect(rest).toHaveValue('15');
   await rest.fill('0');
@@ -86,9 +88,9 @@ test('AUTO-10 : le champ de repos accepte la saisie sans zéro initial',async ({
 });
 
 test('AUTO-11 : Hip Thrust 2 × 20 dans une plage 15–25',async ({page})=>{
-  await page.goto('/');
+  await page.goto('./');
   const result=await page.evaluate(async()=>{
-    const {recommendProgression}=await import('/src/recommendations.ts');
+    const {recommendProgression}=await import(new URL('src/recommendations.ts', document.baseURI).href);
     const time='2026-11-18T08:00:00Z';
     return recommendProgression([{id:'hip1',status:'completed',startedAt:time,updatedAt:time,endedAt:time,targets:[{exerciseId:'hip',order:0,sets:2,reps:20,repMin:15,repMax:25,rir:2,loadKg:30}],exerciseResults:[{index:0,sets:[1,2].map(set=>({set,reps:20,rir:3,loadKg:30,validated:true}))}]}] as never,'hip');
   });
@@ -97,9 +99,9 @@ test('AUTO-11 : Hip Thrust 2 × 20 dans une plage 15–25',async ({page})=>{
 });
 
 test('AUTO-12 : plafond personnalisé à 25 nécessite confirmation',async ({page})=>{
-  await page.goto('/');
+  await page.goto('./');
   const result=await page.evaluate(async()=>{
-    const {recommendProgression}=await import('/src/recommendations.ts');
+    const {recommendProgression}=await import(new URL('src/recommendations.ts', document.baseURI).href);
     const history=[1,2].map(i=>({id:`hip${i}`,status:'completed',startedAt:`2026-11-${10+i}T08:00:00Z`,updatedAt:`2026-11-${10+i}T08:00:00Z`,targets:[{exerciseId:'hip',order:0,sets:2,reps:25,repMin:15,repMax:25,rir:2,loadKg:30}],exerciseResults:[{index:0,sets:[1,2].map(set=>({set,reps:25,rir:3,loadKg:30,validated:true}))}]}));
     return [recommendProgression(history.slice(0,1) as never,'hip'),recommendProgression(history as never,'hip')];
   });
