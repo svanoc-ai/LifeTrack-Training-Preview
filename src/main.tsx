@@ -470,6 +470,7 @@ function App() {
   const [tab, setTab] = useState<Tab>('Accueil');
   const [requestedPlan,setRequestedPlan] = useState<string|null>(null);
   const [showLibrary, setShowLibrary] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [customExercises, setCustomExercises] = useState<Exercise[]>([]);
   const [planningCounts, setPlanningCounts] = useState({templates:0, programs:0, planned:0});
   const [librarySearch, setLibrarySearch] = useState('');
@@ -541,6 +542,31 @@ function App() {
   const [pwaStatus, setPwaStatus] = useState('Initialisation PWA…');
   const [updateWaiting, setUpdateWaiting] = useState<ServiceWorker | null>(null);
   const [checkingUpdate, setCheckingUpdate] = useState(false);
+  const [reloadAvailable, setReloadAvailable] = useState(false);
+  const [applyingUpdate, setApplyingUpdate] = useState(false);
+  const [offlineStatus, setOfflineStatus] = useState<{core:boolean;sounds:boolean;anatomy:boolean}|null>(null);
+  const atUpdatePoint = tab === 'Accueil' && !showProfile && !showLibrary;
+  const updatePoint = React.useRef(false);
+  updatePoint.current = atUpdatePoint;
+
+  const applyUpdate = async () => {
+    if (!updatePoint.current || !dbRef.current || saving || backupBusy || applyingUpdate) return;
+    setApplyingUpdate(true);
+    try {
+      const sessions = await readAll<Execution>(dbRef.current, 'executions');
+      if (!updatePoint.current) return;
+      if (sessions.some(session => session.status === 'active' || session.status === 'paused')) {
+        setPwaStatus('Termine la séance en cours avant de mettre à jour.');
+        return;
+      }
+      if (reloadAvailable) window.location.reload();
+      else updateWaiting?.postMessage({type:'SKIP_WAITING'});
+    } catch {
+      setPwaStatus('La mise à jour est différée. Impossible de vérifier les séances enregistrées.');
+    } finally {
+      setApplyingUpdate(false);
+    }
+  };
   const checkUpdateManually = async () => {
     if (!('serviceWorker' in navigator)) { setPwaStatus('Service worker non disponible'); return; }
     if (!navigator.onLine) { setPwaStatus('Hors ligne : vérification impossible'); return; }
@@ -566,14 +592,35 @@ function App() {
   React.useEffect(() => {
     if (!('serviceWorker' in navigator)) { setPwaStatus('PWA indisponible sur ce navigateur'); return; }
     let live = true;
-    let refreshing = false;
+    let controller = navigator.serviceWorker.controller;
+    let controllerChanged = false;
+    let statusRequest = 0;
+    let cancelStatus: (() => void) | undefined;
+    const readOfflineStatus = (repair = false) => {
+      const worker = navigator.serviceWorker.controller;
+      if (!worker) return;
+      const id = ++statusRequest;
+      cancelStatus?.();
+      const channel = new MessageChannel();
+      const timeout = window.setTimeout(() => channel.port1.close(), 8000);
+      cancelStatus = () => { window.clearTimeout(timeout); channel.port1.close(); };
+      channel.port1.onmessage = event => {
+        if (live && id === statusRequest) setOfflineStatus(event.data);
+        window.clearTimeout(timeout);
+        channel.port1.close();
+      };
+      worker.postMessage({type:'OFFLINE_STATUS', repair}, [channel.port2]);
+    };
     let registration: ServiceWorkerRegistration | null = null;
     let installingWorker: ServiceWorker | null = null;
     const onControllerChange = () => {
+      if (!live) return;
+      const next = navigator.serviceWorker.controller;
+      if (controller && next && controller !== next) controllerChanged = true;
+      setReloadAvailable(controllerChanged);
       setUpdateWaiting(null);
-      if (!live || refreshing) return;
-      refreshing = true;
-      window.location.reload();
+      controller = next;
+      readOfflineStatus(navigator.onLine);
     };
     const onWorkerStateChange = () => {
       if (!live || installingWorker?.state !== 'installed') return;
@@ -592,12 +639,21 @@ function App() {
       if (!live || !navigator.onLine || !registration) return;
       registration.update().catch(() => { /* Une erreur réseau ne bloque pas l’application. */ });
     };
+    const onOffline = () => readOfflineStatus();
+    const onOnline = () => {
+      checkForUpdates();
+      readOfflineStatus(true);
+    };
     const onVisibilityChange = () => {
-      if (document.visibilityState === 'visible') checkForUpdates();
+      if (document.visibilityState === 'visible') {
+        checkForUpdates();
+        readOfflineStatus(navigator.onLine);
+      }
     };
     navigator.serviceWorker.addEventListener('controllerchange', onControllerChange);
     document.addEventListener('visibilitychange', onVisibilityChange);
-    window.addEventListener('online', checkForUpdates);
+    window.addEventListener('online', onOnline);
+    window.addEventListener('offline', onOffline);
     navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, {scope: import.meta.env.BASE_URL, updateViaCache: 'none'})
       .then(reg => {
         if (!live) return;
@@ -610,12 +666,15 @@ function App() {
         reg.addEventListener('updatefound', onUpdateFound);
         onUpdateFound();
         checkForUpdates();
+        readOfflineStatus(navigator.onLine);
       }).catch(error => { if (live) setPwaStatus('PWA non installée : ' + describeError(error)); });
     return () => {
       live = false;
       navigator.serviceWorker.removeEventListener('controllerchange', onControllerChange);
       document.removeEventListener('visibilitychange', onVisibilityChange);
-      window.removeEventListener('online', checkForUpdates);
+      window.removeEventListener('online', onOnline);
+      window.removeEventListener('offline', onOffline);
+      cancelStatus?.();
       registration?.removeEventListener('updatefound', onUpdateFound);
       installingWorker?.removeEventListener('statechange', onWorkerStateChange);
     };
@@ -797,7 +856,6 @@ function App() {
     } catch (error) { setBackupMessage('Restauration refusée : ' + describeError(error)); }
     finally { setBackupBusy(false); if (backupInputRef.current) backupInputRef.current.value = ''; }
   };
-  const [showProfile, setShowProfile] = useState(false);
   const effectiveTheme = theme === 'system' ? 'system' : theme;
 
   const navigate = (next: Tab) => { setTab(next); setShowProfile(false); setShowLibrary(false); window.scrollTo({ top: 0, behavior: 'smooth' }); };
@@ -817,7 +875,14 @@ function App() {
         </header>
         <main id="main" className="content">
           <div className="demo-note"><span className="demo-dot"/> Démonstration sportive · {storageStatus === 'ready' ? 'Profil et préférences enregistrés localement' : storageStatus === 'loading' ? 'Initialisation du stockage…' : 'Stockage indisponible'}</div>
-          {updateWaiting && <div className="pwa-update" role="status"><span>Nouvelle version disponible.</span><button type="button" className="primary-button" onClick={() => updateWaiting.postMessage({type:'SKIP_WAITING'})}>Mettre à jour</button></div>}
+          {(updateWaiting || reloadAvailable) && <div className="pwa-update" role="status">
+            <span>{reloadAvailable ? 'Mise à jour prête. Recharge depuis l’accueil une fois la séance terminée.' : 'Nouvelle version disponible. Termine les saisies en cours avant de revenir à l’accueil.'}</span>
+            {atUpdatePoint && <button type="button" className="primary-button" disabled={applyingUpdate || storageStatus !== 'ready'} onClick={() => void applyUpdate()}>{reloadAvailable ? 'Recharger pour mettre à jour' : 'Mettre à jour'}</button>}
+            {atUpdatePoint && <small>{pwaStatus}</small>}
+          </div>}
+          {offlineStatus && (!offlineStatus.core || !offlineStatus.sounds || !offlineStatus.anatomy) && <p role="status">
+            Disponibilité hors ligne limitée. {[!offlineStatus.core && 'Démarrage', !offlineStatus.sounds && 'Sons', !offlineStatus.anatomy && 'Modèle anatomique'].filter(Boolean).join(', ')} : ressources manquantes. Reconnecte-toi pour les récupérer.
+          </p>}
           {storageError && <div className="storage-error" role="alert">{storageError}</div>}
           {storageStatus === 'ready' && <p className="muted small" style={{margin:'4px 0 10px'}}>Diagnostic L1-C.1 : {storageDetail}</p>}
           {showLibrary && !showProfile && <section>
