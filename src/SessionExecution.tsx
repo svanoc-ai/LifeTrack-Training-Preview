@@ -6,7 +6,7 @@ import {freezeTimed,startTimed,timedElapsed,timedResult,type TimedSet} from './t
 import {advanceClock,beginRestClock,stopRestClock,pauseClock,resumeClock,adjustRestClock,type RestRecord} from './sessionClock';
 import {loadLabel} from './measurementLabels';
 import {MAX_TARGET_SECONDS} from './targetDuration';
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 export type BonusExercise={id:string;name:string;kind:'musculation'|'cardio';muscles:string[];equipment:string[];measurement:'series-repetitions'|'duree-distance';origin:'custom';archived:boolean};
 export type Target={executionMode?:'repetitions'|'maintien'|'effort-chronometre';variantId?:string;muscleSnapshot?:MuscleSnapshot|null;bonus?:boolean;exerciseId:string;order:number;sets?:number;reps?:number;repMin?:number;repMax?:number;loadKg?:number;restSeconds?:number;betweenExerciseRestSeconds?:number;rir?:number;durationSeconds?:number;durationMinutes?:number;distanceKm?:number;supersetId?:string;blockRestBetweenExercisesSeconds?:number;blockRestBetweenRoundsSeconds?:number};
 type Template={id:string;name:string;archived:boolean;targets:Target[]};
@@ -124,16 +124,80 @@ export default function SessionExecution({db,exercises,requestedPlan,onPlanConsu
  };
  useEffect(()=>{if(countdown===null)return;const timer=window.setTimeout(()=>setCountdown(n=>n===null?null:n===0?null:n-1),countdown===0?650:1000);return()=>clearTimeout(timer)},[countdown]);
  const reviewBase=useRef<Execution|null>(null),reviewWasActive=useRef(false),reviewDraftId=useRef<string|null>(null);
- const latest=useRef<Execution|null>(null),writing=useRef(false);latest.current=session;
+ const latest=useRef<Execution|null>(null),writing=useRef(false);
+ const pauseRequestedAt=useRef<number|null>(null);
+ const reviewKey=session ? 'lifetrack.review.'+session.id : null;
+ const clearReviewDraft=()=>{if(reviewKey)try{localStorage.removeItem(reviewKey)}catch{/* Storage can be unavailable. */}};
+ useLayoutEffect(()=>{
+  if(!review||!reviewKey)return;
+  try{localStorage.setItem(reviewKey,JSON.stringify({formAfter,difficulty,comment,activeMin,restMin,reviewResults}));}
+  catch{setError('Le brouillon du bilan ne peut pas être sauvegardé sur cet appareil. Enregistre le bilan avant de fermer.');}
+ },[review,reviewKey,formAfter,difficulty,comment,activeMin,restMin,reviewResults]);
  const saveHistoryCorrection=async(updated:Execution)=>{if(!db)throw new Error('Stockage indisponible');const existing=history.find(h=>h.id===updated.id);if(!existing)throw new Error('Séance introuvable');await write(db,{...updated,id:existing.id,startedAt:existing.startedAt,endedAt:existing.endedAt,status:existing.status});setHistory(prev=>prev.map(h=>h.id===updated.id?updated:h));};
  const deleteHistorySession=async(id:string)=>{if(!db)throw new Error('Stockage indisponible');const existing=history.find(h=>h.id===id);if(!existing)throw new Error('Séance introuvable');await new Promise<void>((resolve,reject)=>{const stores=existing.plannedId?['executions','plannedWorkouts']:['executions'];const tx=db.transaction(stores,'readwrite');tx.objectStore('executions').delete(id);if(existing.plannedId){const req=tx.objectStore('plannedWorkouts').get(existing.plannedId);req.onsuccess=()=>{if(req.result){const plan=req.result as Planned;tx.objectStore('plannedWorkouts').put({...plan,status:'planned',updatedAt:new Date().toISOString()})}}}tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)});setHistory(prev=>prev.filter(h=>h.id!==id));};
- const refresh=async()=>{if(!db)return;const [t,p,s]=await Promise.all([all<Template>(db,'workoutTemplates'),all<Planned>(db,'plannedWorkouts'),all<Execution>(db,'executions')]);setTemplates(t);setPlans(p);setHistory(s.filter(x=>x.endedAt!==null).sort((a,b)=>(b.endedAt||'').localeCompare(a.endedAt||'')));const open=s.filter(x=>x.status==='active'||x.status==='paused').sort((a,b)=>b.startedAt.localeCompare(a.startedAt))[0];if(open){const savedAt=Date.parse(open.lastTick);const safe={...pauseClock(open,savedAt),timedSet:freezeTimed(open.timedSet,savedAt),updatedAt:new Date().toISOString(),lastTick:new Date().toISOString()};await write(db,safe);setSession(safe);const next=nextUnfinished(safe,0);setFocusIndex(safe.pendingAssessment?.index??safe.timedSet?.index??next?.index??Math.max(0,safe.targets.length-1));setFocusSet(safe.pendingAssessment?.set??safe.timedSet?.set??next?.set??1);setAssessment(safe.pendingAssessment??null);setResumePrompt(true)}else{setSession(null);setAssessment(null)}};
+ const refresh=async()=>{if(!db)return;const [t,p,s]=await Promise.all([all<Template>(db,'workoutTemplates'),all<Planned>(db,'plannedWorkouts'),all<Execution>(db,'executions')]);setTemplates(t);setPlans(p);setHistory(s.filter(x=>x.endedAt!==null).sort((a,b)=>(b.endedAt||'').localeCompare(a.endedAt||'')));const open=s.filter(x=>x.status==='active'||x.status==='paused').sort((a,b)=>b.startedAt.localeCompare(a.startedAt))[0];if(open){const savedAt=Date.parse(open.lastTick);const safe={...pauseClock(open,savedAt),timedSet:freezeTimed(open.timedSet,savedAt),updatedAt:new Date().toISOString(),lastTick:new Date().toISOString()};await write(db,safe);latest.current=safe;setSession(safe);const next=nextUnfinished(safe,0);setFocusIndex(safe.pendingAssessment?.index??safe.timedSet?.index??next?.index??Math.max(0,safe.targets.length-1));setFocusSet(safe.pendingAssessment?.set??safe.timedSet?.set??next?.set??1);setAssessment(safe.pendingAssessment??null);setResumePrompt(true)}else{latest.current=null;setSession(null);setAssessment(null)}};
  useEffect(()=>{void refresh().catch(e=>setError(String(e)))},[db]);
  useEffect(()=>{if(!db||!requestedPlan||!plans.some(p=>p.id===requestedPlan))return;setChoice('plan:'+requestedPlan);setPresentationOpen(true);setSourceTab('types');setVariantPanelOpen(true);setSourceSearch('');onPlanConsumed()},[db,requestedPlan,plans,onPlanConsumed]);
  useEffect(()=>{const timer=window.setInterval(()=>setClock(Date.now()),1000);return()=>clearInterval(timer)},[]);
- const persist=async(s:Execution,plan?:Planned,custom?:BonusExercise):Promise<boolean>=>{if(!db||writing.current)return false;writing.current=true;setBusy(true);try{await write(db,s,plan,custom);latest.current=s;setSession(s);setError('');if(plan)setPlans(a=>a.map(x=>x.id===plan.id?plan:x));return true}catch(e){setError('Sauvegarde impossible : '+String(e));return false}finally{writing.current=false;setBusy(false)}};
- const pauseOnHide=()=>{const s=latest.current;if(document.visibilityState==='hidden'&&s?.status==='active'&&db&&!writing.current){const now=Date.now();const p={...pauseClock(s,now),timedSet:freezeTimed(s.timedSet,now)};latest.current=p;setSession(p);void write(db,p).catch(e=>{setError('La mise en pause automatique n’a pas pu être sauvegardée : '+String(e))})}};
- useEffect(()=>{document.addEventListener('visibilitychange',pauseOnHide);return()=>document.removeEventListener('visibilitychange',pauseOnHide)},[db]);
+ // Drain the pause after the current transaction settles, using only committed data.
+ const savePendingPause=async()=>{
+  const hiddenAt=pauseRequestedAt.current;
+  const committed=latest.current;
+  pauseRequestedAt.current=null;
+  if(!db||hiddenAt===null||committed?.status!=='active')return;
+  const at=Math.max(hiddenAt,Date.parse(committed.lastTick));
+  const paused={...pauseClock(committed,at),timedSet:freezeTimed(committed.timedSet,at)};
+  try{
+   await write(db,paused);
+   latest.current=paused;
+   setSession(paused);
+   setCountdown(null);
+   setResumePrompt(true);
+   pauseRequestedAt.current=null;
+  }catch{
+   pauseRequestedAt.current=hiddenAt;
+   setError('La mise en pause automatique n’a pas pu être sauvegardée. Elle sera retentée au retour.');
+  }
+ };
+ const persist=async(s:Execution,plan?:Planned,custom?:BonusExercise):Promise<boolean>=>{
+  if(!db||writing.current)return false;
+  writing.current=true;
+  setBusy(true);
+  try{
+   await write(db,s,plan,custom);
+   latest.current=s;
+   setSession(s);
+   setError('');
+   if(plan)setPlans(items=>items.map(item=>item.id===plan.id?plan:item));
+   return true;
+  }catch(e){
+   setError('Sauvegarde impossible : '+String(e));
+   return false;
+  }finally{
+   await savePendingPause();
+   writing.current=false;
+   setBusy(false);
+  }
+ };
+ const onVisibility=async(hidden:boolean)=>{
+  if(hidden&&(latest.current?.status==='active'||writing.current)){
+   pauseRequestedAt.current??=Date.now();
+  }
+  if(!db||writing.current||pauseRequestedAt.current===null)return;
+  writing.current=true;
+  setBusy(true);
+  try{await savePendingPause()}finally{writing.current=false;setBusy(false)}
+ };
+ useEffect(()=>{
+  const handle=()=>{void onVisibility(document.visibilityState==='hidden')};
+  const onPageHide=()=>{void onVisibility(true)};
+  document.addEventListener('visibilitychange',handle);
+  window.addEventListener('pagehide',onPageHide);
+  return()=>{
+   document.removeEventListener('visibilitychange',handle);
+   window.removeEventListener('pagehide',onPageHide);
+  };
+ },[db]);
  // Settings are stored in the existing IndexedDB store: no database migration required.
  useEffect(()=>{if(!db)return;let cancelled=false;const tx=db.transaction('settings','readonly');const req=tx.objectStore('settings').get('muscleVariantOverrides');req.onsuccess=()=>{if(cancelled)return;const valid:Record<string,MuscleMapping>={};for(const [id,mapping] of Object.entries((req.result?.overrides??{}) as Record<string,MuscleMapping>)){if(!STANDARD_VARIANTS.some(v=>v.id===id))continue;try{valid[id]=validateMapping(mapping)}catch{/* Ignore malformed saved classification */}}setVariantOverrides(valid)};req.onerror=()=>{if(!cancelled)setError('Impossible de charger les classifications personnalisées.')};return()=>{cancelled=true}},[db]);
  const chosenTemplate=(()=>{const plan=choice.startsWith('plan:')?plans.find(p=>p.id===choice.slice(5)):undefined;const past=choice.startsWith('history:')?history.find(h=>h.id===choice.slice(8)):undefined;return past?{targets:past.targets,name:past.name}:templates.find(t=>t.id===(plan?.templateId||choice.slice(9)))} )();
@@ -145,8 +209,11 @@ export default function SessionExecution({db,exercises,requestedPlan,onPlanConsu
   return available.find(v=>v.id===last)?.id??available[0].id;
  };
  const start=async()=>{if(!db||!choice||session)return;const plan=choice.startsWith('plan:')?plans.find(p=>p.id===choice.slice(5)):undefined;const past=choice.startsWith('history:')?history.find(h=>h.id===choice.slice(8)):undefined;const template=past?{id:past.templateId,name:past.name,targets:past.targets,archived:false}:templates.find(t=>t.id===(plan?.templateId||choice.slice(9)));if(!template){setError('Séance introuvable.');return}const now=new Date().toISOString();await persist({id:'execution:'+crypto.randomUUID(),templateId:template.id,plannedId:plan?.id||null,name:template.name,targets:structuredClone(template.targets).map((t:Target,i:number)=>{const id=preferredVariant(t.exerciseId,i);const variant=STANDARD_VARIANTS.find(v=>v.id===id&&v.exerciseId===t.exerciseId);return {...t,variantId:variant?.id,muscleSnapshot:variant?captureMapping(customizeVariant(variant,variantOverrides[variant.id]??variant.mapping),now):null}}),startedAt:now,updatedAt:now,endedAt:null,status:'active',activeMs:0,pauseMs:0,restMs:0,restStartedAt:null,restRemainingMs:0,lastTick:now,completedIndexes:[],manualDuration:false,exerciseResults:[],cardioResults:[],exerciseKinds:Object.fromEntries(template.targets.map((t,i)=>[i,exercises.find(e=>e.id===t.exerciseId)?.kind]).filter(([,kind])=>kind==='musculation'||kind==='cardio'))})};
- const changeStatus=async(status:'active'|'paused')=>{if(!session)return;if(status==='active'&&allExercisesDone(session)&&!session.pendingAssessment){if(session.completionPending){setCountdown(null);setReview(false);setResumePrompt(false);setCelebrating(true)}else{await openReview()}return}const now=Date.now();const changed=status==='paused'?pauseClock(session,now):resumeClock(session,now);if(await persist({...changed,timedSet:status==='paused'?freezeTimed(session.timedSet,now):session.timedSet})){setResumePrompt(false);if(status==='active'&&!session.restUntil&&!session.pendingAssessment)beginCountdown();else if(status==='paused')setCountdown(null)}};
- const openReview=async()=>{if(!session||busy)return;const s=snapshot(session);reviewBase.current=s;reviewWasActive.current=session.status==='active';if(session.status==='active'&&!(await persist({...pauseClock(s,Date.parse(s.lastTick)),timedSet:freezeTimed(s.timedSet,Date.parse(s.lastTick))})))return;if(reviewDraftId.current!==s.id){setFormAfter(s.formAfter??7);setDifficulty(s.difficulty??5);setComment(s.comment??'');setActiveMin(format(s.activeMs));setRestMin(format(s.restMs??0));setReviewResults((s.exerciseResults??[]).map(r=>({...r,sets:r.sets.map(v=>({...v}))})));setReviewExerciseOpen(false);setReviewExpandedIndex(null);}reviewDraftId.current=null;setReview(true);setCelebrating(false);setResumePrompt(false)};
+ const changeStatus=async(status:'active'|'paused')=>{if(!session)return;if(status==='active'&&allExercisesDone(session)&&!session.pendingAssessment){if(session.completionPending){setCountdown(null);setReview(false);setResumePrompt(false);setCelebrating(true)}else{await openReview()}return}const now=Date.now();const changed=status==='paused'?pauseClock(session,now):resumeClock(session,now);if(await persist({...changed,timedSet:status==='paused'?freezeTimed(session.timedSet,now):session.timedSet})&&latest.current?.status===status){setResumePrompt(false);if(status==='active'&&!session.restUntil&&!session.pendingAssessment)beginCountdown();else if(status==='paused')setCountdown(null)}};
+ const openReview=async()=>{if(!session||busy)return;const s=snapshot(session);reviewBase.current=s;reviewWasActive.current=session.status==='active';if(session.status==='active'&&!(await persist({...pauseClock(s,Date.parse(s.lastTick)),timedSet:freezeTimed(s.timedSet,Date.parse(s.lastTick))})))return;if(reviewDraftId.current!==s.id){let draft;
+ try{draft=JSON.parse(localStorage.getItem('lifetrack.review.'+s.id)??'null') as {formAfter:number;difficulty:number;comment:string;activeMin:string;restMin:string;reviewResults:ExerciseResult[]}|null}catch{/* Fall back to the committed session. */}
+ setFormAfter(draft?.formAfter??s.formAfter??7);setDifficulty(draft?.difficulty??s.difficulty??5);setComment(draft?.comment??s.comment??'');setActiveMin(draft?.activeMin??format(s.activeMs));setRestMin(draft?.restMin??format(s.restMs??0));if(draft?.reviewResults)setReviewResults(draft.reviewResults);
+ else setReviewResults((s.exerciseResults??[]).map(r=>({...r,sets:r.sets.map(v=>({...v}))})));setReviewExerciseOpen(false);setReviewExpandedIndex(null);}reviewDraftId.current=null;setReview(true);setCelebrating(false);setResumePrompt(false)};
  const cancelReview=async()=>{
   if(!session||busy)return;
   if(allExercisesDone(session)){
@@ -155,7 +222,7 @@ export default function SessionExecution({db,exercises,requestedPlan,onPlanConsu
    reviewDraftId.current=session.id;setCountdown(null);setCelebrating(true);setReview(false);setResumePrompt(false);setError('');reviewBase.current=null;return;
   }
   const baseline=reviewBase.current??session;const now=Date.now();const restored={...session,activeMs:baseline.activeMs,restMs:baseline.restMs,pauseMs:baseline.pauseMs,lastTick:new Date(now).toISOString()};if(!(await persist(reviewWasActive.current?resumeClock(restored,now):restored)))return;
-  reviewDraftId.current=null;setReview(false);setError('');reviewBase.current=null;if(reviewWasActive.current&&session.timedSet)beginCountdown();
+  clearReviewDraft();reviewDraftId.current=null;setReview(false);setError('');reviewBase.current=null;if(reviewWasActive.current&&session.timedSet)beginCountdown();
  };
  const finish=async(abandon=false)=>{
   if(!session||!db||busy)return;
@@ -174,7 +241,7 @@ export default function SessionExecution({db,exercises,requestedPlan,onPlanConsu
    formAfter:abandon?base.formAfter:formAfter,difficulty:abandon?base.difficulty:difficulty,comment:abandon?base.comment:comment.trim()};
   const old=plans.find(x=>x.id===session.plannedId);
   if(!(await persist(done,old?{...old,status,updatedAt:done.updatedAt}:undefined)))return;
-  setHistory(h=>[done,...h.filter(x=>x.id!==done.id)]);setSession(null);setAssessment(null);setCountdown(null);setCelebrating(false);setBonusOpen(false);setReview(false);setFocusSet(1);setResumePrompt(false);setChoice('');setVariantChoices({});setSavedNotice(true);reviewBase.current=null;reviewDraftId.current=null;
+  clearReviewDraft();latest.current=null;setHistory(h=>[done,...h.filter(x=>x.id!==done.id)]);setSession(null);setAssessment(null);setCountdown(null);setCelebrating(false);setBonusOpen(false);setReview(false);setFocusSet(1);setResumePrompt(false);setChoice('');setVariantChoices({});setSavedNotice(true);reviewBase.current=null;reviewDraftId.current=null;
  };
  const restRemaining=session?.restUntil?Math.max(0,Math.ceil((Date.parse(session.restUntil)-clock)/1000)):0;
  const restActive=!!session?.restUntil&&restRemaining>0&&!allExercisesDone(session);
